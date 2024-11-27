@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getTestById } from '../utils/http';
-import {SERVER_IP, SERVER_PORT, WS_PROTOCOL} from '../utils/constraints';
+import { SERVER_IP, SERVER_PORT, WS_PROTOCOL } from '../utils/constraints';
 import { Client } from '@stomp/stompjs';
 import TestPreview from '../components/TestPreview';
 import Question from '../components/Question';
@@ -83,6 +83,7 @@ function Test() {
         };
       })
       .catch((error) => setError({ message: error.message || 'An error occurred' }));
+    setMessage(null);
   }, [id]);
 
   useEffect(() => {

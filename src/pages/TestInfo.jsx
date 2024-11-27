@@ -9,7 +9,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { calculateTimeDifference } from '../utils/timeUtils';
-import {CLIENT_PATH, HTTP_PROTOCOL} from '../utils/constraints';
+import { CLIENT_PATH } from '../utils/constraints';
 import Questions from '../components/info/Questions';
 
 function TestInfo() {
@@ -21,7 +21,7 @@ function TestInfo() {
   const [error, setError] = useState(null);
   const [isQuestionsVisible, setIsQuestionsVisible] = useState(false);
   const [copied, setCopied] = useState(false);
-  const testLink = `${HTTP_PROTOCOL}${CLIENT_PATH}/${id}`;
+  const testLink = `http://${CLIENT_PATH}/#/${id}`;
 
   useEffect(() => {
     const token = Cookies.get('token');

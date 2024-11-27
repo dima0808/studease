@@ -3,9 +3,8 @@ import { useState } from 'react';
 
 import info from '../assets/icons/info.svg';
 import clone from '../assets/icons/clone.svg';
-// import edit from '../assets/icons/edit.svg';
 import remove from '../assets/icons/remove.svg';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const DropdownMenu = ({ id, onDelete, isTest = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,7 +12,7 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
   const navigate = useNavigate();
 
   const handleInfo = () => {
-    window.open(`${isTest ? 'tests' : 'collections'}/${id}`, '_blank');
+    window.open(`#/${isTest ? 'tests' : 'collections'}/${id}`, '_blank');
     setIsMenuOpen(false);
   };
 
@@ -67,13 +66,9 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
             Info
           </div>
           <div onClick={handleClone} className="dropdown__item">
-            <img src={clone} alt="clone"/>
+            <img src={clone} alt="clone" />
             Clone
           </div>
-          {/*<div className="dropdown__item">*/}
-          {/*  <img src={edit} alt="edit" />*/}
-          {/*  Edit*/}
-          {/*</div>*/}
           <div onClick={() => onDelete(id)} className="dropdown__item remove">
             <img src={remove} alt="remove" />
             Remove
@@ -83,5 +78,4 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
     </div>
   );
 };
-
 export default DropdownMenu;

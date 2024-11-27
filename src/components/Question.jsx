@@ -65,7 +65,8 @@ function Question({
 
   return (
     <div className="container">
-      <div className={`question__body ${error ? 'border-error' : ''}`}>
+      <div
+        className={`question__body ${error === 'Answers must not be empty' ? 'border-error' : ''}`}>
         <div className="question__timer">
           <div className="question__counter">
             {testSession.currentQuestionIndex + 1}/{test.questionsCount}
@@ -76,7 +77,10 @@ function Question({
             </div>
           )}
         </div>
-        <h1 className={`question__type ${error ? 'color-error' : ''}`}>
+        <h1
+          className={`question__type ${
+            error === 'Answers must not be empty' ? 'color-error' : ''
+          }`}>
           {(() => {
             switch (question.type) {
               case 'single_choice':
