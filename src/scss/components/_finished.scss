@@ -1,0 +1,37 @@
+.finished {
+  margin-top: 120px;
+  padding: 85px 107px;
+  background-color: $white;
+  max-width: 1030px;
+  width: 100%;
+  border-radius: 26px;
+
+  &__answer {
+    display: flex;
+    justify-content: end;
+  }
+
+  &__check {
+    font-size: 28px;
+    padding: 8px 40px;
+    border: 2px solid $blue-duration;
+    color: $blue-duration;
+    background-color: transparent;
+    margin-top: 35px;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: $blue-light;
+    }
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 36px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid $color-table;
+  }
+}

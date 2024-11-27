@@ -1,0 +1,44 @@
+.tests {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  &__tools {
+    padding-top: 10px;
+    display: flex;
+    gap: 9px;
+  }
+  &__slogan {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__title {
+    &--purple {
+      font-size: 62px;
+      font-weight: 500;
+      background: linear-gradient(90deg, #4200c7, #c7006a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &--green {
+      font-size: 62px;
+      font-weight: 500;
+      background: linear-gradient(90deg, #00c774, #005dc7);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}
+
+.tests-table {
+  margin-top: 122px;
+  width: 1044px;
+}

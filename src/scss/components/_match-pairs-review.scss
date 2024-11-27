@@ -1,0 +1,100 @@
+.match-pairs-review {
+  margin-top: 40px;
+  max-width: 850px;
+  font-size: 20px;
+
+  &__list--answer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  &__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+  }
+
+  &__between {
+    height: 1px;
+    width: 25px;
+    background-color: #a8a8a8;
+  }
+
+  &__name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 295px;
+    height: 75px;
+    border: 2px solid #dbdbdb;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-inline: 10px;
+    overflow: hidden;
+    word-break: break-word;
+    text-align: center;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 295px;
+    height: 75px;
+    border: 2px solid #dbdbdb;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-inline: 10px;
+    overflow: hidden;
+    word-break: break-word;
+    text-align: center;
+    transition: box-shadow 0.3s ease, border 0.3s ease;
+  }
+
+  &__field.filled {
+    border: none;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 600px) {
+    &__name,
+    &__field,
+    &__answer {
+      width: 100%;
+      height: auto;
+      font-size: 18px;
+      padding: 10px;
+    }
+  }
+
+  &__answer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 295px;
+    height: 75px;
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 500;
+    padding-inline: 10px;
+    overflow: hidden;
+    word-break: break-word;
+    text-align: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+  }
+}

@@ -1,0 +1,70 @@
+.multiple-choice {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 21px;
+    font-weight: 500;
+
+    span {
+      user-select: none;
+    }
+
+    input[type='checkbox'] {
+      display: none;
+    }
+
+    .custom-checkbox {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ccc;
+      border-radius: 3px;
+      margin-right: 10px;
+      position: relative;
+
+      // Стиль для вибраного чекбокса
+      &.checked {
+        background-color: #007bff;
+        border-color: #007bff;
+
+        &::after {
+          content: '';
+          width: 8px;
+          height: 8px;
+          background-color: white;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    input[type='checkbox']:checked + .custom-checkbox {
+      background-color: #007bff;
+      border-color: #007bff;
+
+      &::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .option {
+      font-size: 18px;
+    }
+  }
+}

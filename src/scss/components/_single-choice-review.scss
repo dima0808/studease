@@ -1,0 +1,53 @@
+.single-choice-review {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 21px;
+    font-weight: 500;
+
+    span {
+      user-select: none;
+    }
+
+    input[type='radio'] {
+      display: none;
+    }
+
+    .custom-radio {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      margin-right: 10px;
+      position: relative;
+    }
+
+    input[type='radio']:checked + .custom-radio {
+      background-color: #007bff;
+    }
+
+    input[type='radio']:checked + .custom-radio::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background-color: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .option {
+      font-size: 18px;
+    }
+  }
+}
