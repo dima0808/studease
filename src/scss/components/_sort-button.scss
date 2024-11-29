@@ -1,0 +1,19 @@
+.sort-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.2em 0.4em;
+  font-size: 1rem;
+  color: #333;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
+
+  &:hover {
+    color: #007bff;
+  }
+
+  svg {
+    font-size: 0.8em;
+  }
+}

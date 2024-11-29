@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaCopy } from 'react-icons/fa';
+import { FaCopy, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'; // Іконки сортування
 import {
   getFinishedSessionsByTestId,
   getFinishedSessionsByTestIdInCsv,
@@ -17,6 +17,8 @@ function TestInfo() {
   const navigate = useNavigate();
   const [testData, setTestData] = useState(null);
   const [testFinishedSessions, setTestFinishedSessions] = useState([]);
+  const [sortedSessions, setSortedSessions] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: null }); // Для збереження стану сортування
   const [questions, setQuestions] = useState([]);
   const [error, setError] = useState(null);
   const [isQuestionsVisible, setIsQuestionsVisible] = useState(false);
@@ -32,7 +34,10 @@ function TestInfo() {
       .then((data) => setQuestions(data.questions))
       .catch((error) => setError({ message: error.message || 'An error occurred' }));
     getFinishedSessionsByTestId(id, token)
-      .then((data) => setTestFinishedSessions(data.sessions))
+      .then((data) => {
+        setTestFinishedSessions(data.sessions);
+        setSortedSessions(data.sessions); // Ініціалізуємо відсортовані дані
+      })
       .catch((error) => setError({ message: error.message || 'An error occurred' }));
   }, [id]);
 
@@ -41,6 +46,50 @@ function TestInfo() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
+  };
+
+  const sortSessions = (key) => {
+    let direction = 'asc';
+
+    // Перевірка напряму сортування
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+
+    const sorted = [...testFinishedSessions].sort((a, b) => {
+      if (key === 'studentName') {
+        // Сортування за прізвищем
+        const surnameA = a[key].split(' ')[0];
+        const surnameB = b[key].split(' ')[0];
+        return direction === 'asc'
+          ? surnameA.localeCompare(surnameB)
+          : surnameB.localeCompare(surnameA);
+      }
+
+      if (key === 'completionTime') {
+        // Обчислення тривалості часу завершення
+        const timeA =
+          new Date(a.finishedAt.split('.').reverse().join('-')) -
+          new Date(a.startedAt.split('.').reverse().join('-'));
+        const timeB =
+          new Date(b.finishedAt.split('.').reverse().join('-')) -
+          new Date(b.startedAt.split('.').reverse().join('-'));
+        return direction === 'asc' ? timeA - timeB : timeB - timeA;
+      }
+
+      // Сортування за іншими текстовими полями
+      return direction === 'asc' ? a[key].localeCompare(b[key]) : b[key].localeCompare(a[key]);
+    });
+
+    setSortedSessions(sorted);
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIcon = (key) => {
+    if (sortConfig.key === key) {
+      return sortConfig.direction === 'asc' ? <FaSortUp /> : <FaSortDown />;
+    }
+    return <FaSort />;
   };
 
   if (error) return <div>{error.message}</div>;
@@ -87,15 +136,30 @@ function TestInfo() {
       <table className="test-info__table">
         <thead>
           <tr>
-            <th>Group</th>
-            <th>Full Name</th>
+            <th>
+              Group
+              <button className="sort-button" onClick={() => sortSessions('studentGroup')}>
+                {getSortIcon('studentGroup')}
+              </button>
+            </th>
+            <th>
+              Full Name
+              <button className="sort-button" onClick={() => sortSessions('studentName')}>
+                {getSortIcon('studentName')}
+              </button>
+            </th>
             <th>Score</th>
-            <th>Completion Time</th>
+            <th>
+              Completion Time
+              <button className="sort-button" onClick={() => sortSessions('completionTime')}>
+                {getSortIcon('completionTime')}
+              </button>
+            </th>
             <th>Details</th>
           </tr>
         </thead>
         <tbody>
-          {testFinishedSessions.map((session, index) => (
+          {sortedSessions.map((session, index) => (
             <tr key={index}>
               <td>{session.studentGroup}</td>
               <td>{session.studentName}</td>
