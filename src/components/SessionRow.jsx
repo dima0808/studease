@@ -76,7 +76,7 @@ const SessionRow = ({
         <input type="checkbox" checked={isSelected} onChange={handleCheckboxChange} id={id} />
         <label htmlFor={id}></label>
       </div>
-      <div className="session-row__title">{truncateText(name, 24)}</div>
+      <div className="session-row__title">{truncateText(name, 20)}</div>
       <div className="session-row__dates">
         <div className="session-row__start-date">
           <span>{openTimePart} UTC+2</span>

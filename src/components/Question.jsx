@@ -61,8 +61,6 @@ function Question({
     return <div>Loading...</div>;
   }
 
-  console.log('question', error);
-
   return (
     <div className="container">
       <div

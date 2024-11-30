@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { getTestById } from '../utils/http';
 import { SERVER_IP, SERVER_PORT, WS_PROTOCOL } from '../utils/constraints';
@@ -20,6 +20,8 @@ function Test() {
   const [testSession, setTestSession] = useState(null);
   const [question, setQuestion] = useState(null);
   const [message, setMessage] = useState(null);
+  const [isAlive, setIsAlive] = useState(true);
+  const isAliveRef = useRef(true);
 
   const onTestSessionMessageReceived = (message) => {
     const { type, content, question, testSession } = JSON.parse(message.body);
@@ -48,6 +50,9 @@ function Test() {
         setIsFinished(true);
         setTestSession(testSession);
         break;
+      case 'HEALTHCHECK':
+        setIsAlive(true);
+        break;
       default:
         break;
     }
@@ -61,40 +66,40 @@ function Test() {
 
   useEffect(() => {
     getTestById(id)
-      .then((data) => {
-        setTest(data);
-        const client = new Client({
-          brokerURL: WS_PROTOCOL + SERVER_IP + SERVER_PORT + '/ws',
-          onConnect: () => {
-            console.log('WebSocket client connected');
-            setIsConnected(true);
-          },
-          onStompError: () => {
-            console.log('Failed to connect WebSocket client');
-            setIsConnected(false);
-          },
-        });
-        client.activate();
-        setClient(client);
-        return () => {
-          client.deactivate().then(() => console.log('WebSocket client disconnected'));
-          setClient(null);
+    .then((data) => {
+      setTest(data);
+      const client = new Client({
+        brokerURL: WS_PROTOCOL + SERVER_IP + SERVER_PORT + '/ws',
+        onConnect: () => {
+          console.log('WebSocket client connected');
+          setIsConnected(true);
+        },
+        onStompError: () => {
+          console.log('Failed to connect WebSocket client');
           setIsConnected(false);
-        };
-      })
-      .catch((error) => setError({ message: error.message || 'An error occurred' }));
+        },
+      });
+      client.activate();
+      setClient(client);
+      return () => {
+        client.deactivate().then(() => console.log('WebSocket client disconnected'));
+        setClient(null);
+        setIsConnected(false);
+      };
+    })
+    .catch((error) => setError({ message: error.message || 'An error occurred' }));
     setMessage(null);
   }, [id]);
 
   useEffect(() => {
     if (client && isConnected && credentials) {
       const errorSubscription = client.subscribe(
-        `/user/${credentials}/queue/errors`,
-        onErrorMessageReceived,
+          `/user/${credentials}/queue/errors`,
+          onErrorMessageReceived,
       );
       const testSessionSubscription = client.subscribe(
-        `/user/${credentials}/queue/testSession`,
-        onTestSessionMessageReceived,
+          `/user/${credentials}/queue/testSession`,
+          onTestSessionMessageReceived,
       );
       const studentGroup = credentials.split(':')[0];
       const studentName = credentials.split(':')[1];
@@ -119,17 +124,26 @@ function Test() {
     }
   }, [client, isConnected, credentials, id]);
 
-  const handleStartTest = (studentGroup, studentName) => {
-    if (!client || !isConnected) {
-      return; // handle error in a better way
+  useEffect(() => {
+    isAliveRef.current = isAlive;
+  }, [isAlive]);
+
+  useEffect(() => {
+    if (client && isConnected) {
+      const interval = setInterval(() => {
+        console.log('Ping. Checking connection...');
+        if (!isAliveRef.current) {
+          client.deactivate().then(() => console.log('WebSocket client disconnected'));
+          setClient(null);
+          setIsConnected(false);
+        } else {
+          setIsAlive(false);
+          handleHealthcheck();
+        }
+      }, 15000);
+      return () => clearInterval(interval);
     }
-    if (!studentGroup || !studentName) {
-      return; // handle error in a better way
-    }
-    setCredentials(`${studentGroup}:${studentName}`);
-    Cookies.set('group', studentGroup);
-    Cookies.set('name', studentName);
-  };
+  }, [client, isConnected, credentials, id]);
 
   const enterFullscreen = () => {
     const elem = document.documentElement;
@@ -162,6 +176,34 @@ function Test() {
     // For Safari
     return 'Are you sure you want to leave? Your test will be finished.';
   };
+
+  const handleStartTest = (studentGroup, studentName) => {
+    if (!client || !isConnected) {
+      return; // handle error in a better way
+    }
+    if (!studentGroup || !studentName) {
+      return; // handle error in a better way
+    }
+    setCredentials(`${studentGroup}:${studentName}`);
+    Cookies.set('group', studentGroup);
+    Cookies.set('name', studentName);
+  };
+
+  const handleHealthcheck = () => {
+    if (!client || !isConnected) {
+      return; // handle error in a better way
+    }
+    try {
+      client.publish({
+        destination: `/api/v1/tests/${id}/healthcheck`,
+        headers: {
+          credentials: credentials,
+        },
+      });
+    } catch (error) {
+      console.log('Error health check (no connection)');
+    }
+  }
 
   const handleNextQuestion = () => {
     if (!client || !isConnected) {
@@ -226,15 +268,15 @@ function Test() {
 
   if (isStarted && !isFinished) {
     return (
-      <Question
-        test={test}
-        handleSaveAnswer={handleSaveAnswer}
-        handleFinishTest={handleFinishTest}
-        testSession={testSession}
-        question={question}
-        error={message}
-        clearError={() => setMessage(null)}
-      />
+        <Question
+            test={test}
+            handleSaveAnswer={handleSaveAnswer}
+            handleFinishTest={handleFinishTest}
+            testSession={testSession}
+            question={question}
+            error={message}
+            clearError={() => setMessage(null)}
+        />
     );
   }
 
