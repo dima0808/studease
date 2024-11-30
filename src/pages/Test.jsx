@@ -129,7 +129,7 @@ function Test() {
   }, [isAlive]);
 
   useEffect(() => {
-    if (client && isConnected) {
+    if (isStarted && client && isConnected) {
       const interval = setInterval(() => {
         console.log('Ping. Checking connection...');
         if (!isAliveRef.current) {
@@ -143,7 +143,7 @@ function Test() {
       }, 15000);
       return () => clearInterval(interval);
     }
-  }, [client, isConnected, credentials, id]);
+  }, [isStarted, client, isConnected, credentials, id]);
 
   const enterFullscreen = () => {
     const elem = document.documentElement;
