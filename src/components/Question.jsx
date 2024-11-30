@@ -82,9 +82,9 @@ function Question({
           {(() => {
             switch (question.type) {
               case 'single_choice':
-                return 'Choose one option';
+                return 'Choose your option';
               case 'multiple_choices':
-                return 'Select all options';
+                return 'Choose your options';
               case 'matching':
                 return 'Match the pairs';
               default:
