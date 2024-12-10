@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Questions from '../components/creation/Questions';
 import Trash from '../assets/icons/trash.svg';
-import { FaPlus, FaFolderPlus, FaCheck } from 'react-icons/fa';
+import { FaPlus, FaFolderPlus, FaCheck, FaRobot } from 'react-icons/fa';
 
 function TestCreation() {
   const location = useLocation();
@@ -285,6 +285,9 @@ function TestCreation() {
       <div className="buttons-container">
         <button onClick={handleAddQuestion}>
           <FaPlus /> Add Question
+        </button>
+        <button onClick={handleAddQuestion}>
+          <FaRobot /> Generation with AI
         </button>
         <button onClick={handleAddCollection}>
           <FaFolderPlus /> Add Collection
