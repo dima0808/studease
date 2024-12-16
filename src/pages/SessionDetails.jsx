@@ -71,12 +71,14 @@ function SessionDetails() {
               <SingleChoiceReview
                 answers={response.question.answers}
                 selectedAnswer={response.answerIds}
+                questionId={response.question.id}
               />
             )}
             {response.question.type === 'multiple_choices' && (
               <MultipleChoicesReview
                 answers={response.question.answers}
                 selectedAnswer={response.answerIds}
+                questionId={response.question.id}
               />
             )}
             {response.question.type === 'matching' && (
