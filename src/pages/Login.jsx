@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import human from '../assets/icons/human.svg';
 import password from '../assets/icons/password.svg';
+import {CLIENT_PATH} from "../utils/constraints";
 
 function Login() {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ function Login() {
       navigate('/tests');
     }
   }, [navigate]);
+
+  console.log(CLIENT_PATH);
 
   return (
     <div className="container__center">
