@@ -55,10 +55,6 @@ const CollectionsTable = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  console.log(collections);
-  console.log(selectedCollections);
-  console.log(selectAll);
-
   return (
     <div className="tests-table">
       <Header

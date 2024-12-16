@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  createTest,
+  createTest, generateQuestions,
   getAllCollections,
   getQuestionsByTestId,
   getSamplesByTestId,
@@ -22,6 +22,7 @@ function TestCreation() {
     questions: [],
     samples: [],
   });
+  const [prompt, setPrompt] = useState(null);
   const [collections, setCollections] = useState([]);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ function TestCreation() {
         ...test.questions,
         {
           content: '',
-          points: 0,
+          points: 1,
           type: 'multiple_choices',
           answers: [],
           collection: '',
@@ -101,6 +102,47 @@ function TestCreation() {
     });
   };
 
+  const handleAddQuestionPrompt = () => {
+    setPrompt({
+      theme: '',
+      type: 'single_choice',
+      points: 1,
+      questionsCount: 1,
+    });
+  }
+
+  const handleGenerateQuestions = (prompt) => {
+    const token = Cookies.get('token');
+    generateQuestions(prompt, token)
+      .then((data) => {
+        setTest({
+          ...test,
+          questions: [
+            ...test.questions,
+            ...data.questions.map((question) => ({
+              content: question.content,
+              points: question.points,
+              type: question.type,
+              answers:
+                question.type === 'matching'
+                  ? question.answers
+                      .map((answer) => ({
+                        leftOption: answer.leftOption,
+                        rightOption: answer.rightOption,
+                      }))
+                  : question.answers,
+              collection: '',
+              isSaved: false,
+            })),
+          ],
+        });
+        setPrompt(null);
+      })
+      .catch((error) => {
+        setErrors((prevErrors) => ({ ...prevErrors, submit: error.message }));
+      });
+  }
+
   const handleAddCollection = () => {
     setTest({
       ...test,
@@ -108,8 +150,8 @@ function TestCreation() {
         ...test.samples,
         {
           collectionName: collections[0]?.name || '',
-          points: 0,
-          questionsCount: 0,
+          points: 1,
+          questionsCount: 1,
         },
       ],
     });
@@ -227,19 +269,68 @@ function TestCreation() {
           setErrors={setErrors}
         />
       </div>
+      {prompt && (
+        <div className="test-creation__questions">
+          <div className="question-form">
+            <div className="collection__controll">
+              <label>Theme:</label>
+              <input
+                  type="text"
+                  name="theme"
+                  placeholder="Theme"
+                  value={prompt.theme}
+                  onChange={(e) => setPrompt({...prompt, theme: e.target.value})}
+              />
+            </div>
+            <div className="answer__controller--score">
+              <label>Points:</label>
+              <input
+                  type="text"
+                  name="points"
+                  placeholder="Points"
+                  value={prompt.points}
+                  onChange={(e) => setPrompt({...prompt, points: e.target.value})}
+              />
+            </div>
+            <div className="answer__controller--type">
+              <label>Type:</label>
+              <select
+                  name="type"
+                  value={prompt.type}
+                  onChange={(e) => setPrompt({...prompt, type: e.target.value})}
+              >
+                <option value="multiple_choices">Multiple Choices</option>
+                <option value="single_choice">Single Choice</option>
+                <option value="matching">Matching</option>
+              </select>
+            </div>
+            <div className="collection__controll">
+              <label>Questions count:</label>
+              <input
+                  type="number"
+                  name="questionsCount"
+                  value={prompt.questionsCount}
+                  onChange={(e) => setPrompt({...prompt, questionsCount: e.target.value})}
+              />
+            </div>
+            <button onClick={() => setPrompt(null)}>Cancel</button>
+            <button onClick={() => handleGenerateQuestions(prompt)}>Generate</button>
+          </div>
+        </div>
+      )}
       <div className="test-creation__questions">
         {test.samples.map((sample, sIndex) => (
-          <div className="collection" key={sIndex}>
-            <div className="question-form">
-              <div className="collection__controll">
-                <label>Collection Name:</label>
-                <select
-                  name="collectionName"
-                  value={sample.collectionName}
-                  onChange={(e) => handleCollectionNameChange(sIndex, e)}>
-                  {collections.map((collection) => (
-                    <option key={collection.id} value={collection.name}>
-                      {collection.name}
+            <div className="collection" key={sIndex}>
+              <div className="question-form">
+                <div className="collection__controll">
+                  <label>Collection Name:</label>
+                  <select
+                      name="collectionName"
+                      value={sample.collectionName}
+                      onChange={(e) => handleCollectionNameChange(sIndex, e)}>
+                    {collections.map((collection) => (
+                        <option key={collection.id} value={collection.name}>
+                        {collection.name}
                     </option>
                   ))}
                 </select>
@@ -286,7 +377,7 @@ function TestCreation() {
         <button onClick={handleAddQuestion}>
           <FaPlus /> Add Question
         </button>
-        <button onClick={handleAddQuestion}>
+        <button onClick={handleAddQuestionPrompt}>
           <FaRobot /> Generation with AI
         </button>
         <button onClick={handleAddCollection}>

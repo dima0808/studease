@@ -1,7 +1,7 @@
-export const HTTP_PROTOCOL = "https://"; // http:// or https://
-export const WS_PROTOCOL = "wss://"; // ws:// or wss://
+export const HTTP_PROTOCOL = process.env.REACT_APP_HTTP_PROTOCOL || "http://";
+export const WS_PROTOCOL = process.env.REACT_APP_WS_PROTOCOL || "ws://";
 
-export const SERVER_IP = 'kpi-ficting-5b051d21b495.herokuapp.com'; // localhost
-export const SERVER_PORT = ''; // :8080
+export const SERVER_IP = process.env.REACT_APP_SERVER_IP || "localhost";
+export const SERVER_PORT = process.env.REACT_APP_SERVER_PORT || ":8080";
 
-export const CLIENT_PATH = 'dima0808.github.io/kpi-ficting'; // localhost:3000/kpi-ficting
+export const CLIENT_PATH = process.env.REACT_APP_CLIENT_PATH || "localhost:3000/kpi-ficting";

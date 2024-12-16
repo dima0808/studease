@@ -4,7 +4,6 @@ import MultipleChoicesReview from '../../components/review/MultipleChoicesReview
 import MatchPairsReview from '../../components/review/MatchPairsReview';
 
 function Questions({ questions }) {
-  console.log(questions);
   return (
     <div>
       <div className="mt-55 mb-55">

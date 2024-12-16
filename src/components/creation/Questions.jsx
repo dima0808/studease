@@ -195,7 +195,8 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                 <select
                   name="type"
                   value={question.type}
-                  onChange={(e) => handleQuestionTypeChange(qIndex, e)}>
+                  onChange={(e) => handleQuestionTypeChange(qIndex, e)}
+                >
                   <option value="multiple_choices">Multiple Choices</option>
                   <option value="single_choice">Single Choice</option>
                   <option value="matching">Matching</option>

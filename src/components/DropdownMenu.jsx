@@ -21,6 +21,12 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
     setIsMenuOpen(false);
   };
 
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      onDelete(id);
+    }
+  }
+
   const handleMenuToggle = (e) => {
     e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
@@ -69,7 +75,7 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
             <img src={clone} alt="clone" />
             Clone
           </div>
-          <div onClick={() => onDelete(id)} className="dropdown__item remove">
+          <div onClick={handleDelete} className="dropdown__item remove">
             <img src={remove} alt="remove" />
             Remove
           </div>

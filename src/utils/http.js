@@ -139,7 +139,6 @@ export async function addQuestionToCollection(data, name, token) {
     },
     body: JSON.stringify({questions: [data]}),
   });
-  console.log({questions: [data]})
   const resData = await response.json();
   if (!response.ok) {
     throw new Error(resData.message);
@@ -211,6 +210,19 @@ export async function getFinishedSessionsByTestIdInCsv(name, id, token) {
 
 export async function getAllCollections(token) {
   const response = await fetch(`${HTTP_PROTOCOL}${SERVER_IP}${SERVER_PORT}/api/v1/admin/collections`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+  return resData;
+}
+
+export async function generateQuestions(data, token) {
+  const response = await fetch(`${HTTP_PROTOCOL}${SERVER_IP}${SERVER_PORT}/api/v1/admin/questions/generate?theme=${data.theme}&questionType=${data.type}&points=${data.points}&questionsCount=${data.questionsCount}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
