@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/kpi-ficting/static/css/main.2aade8b9.css",
-    "main.js": "/kpi-ficting/static/js/main.5102b96d.js",
+    "main.css": "/kpi-ficting/static/css/main.ff4b85aa.css",
+    "main.js": "/kpi-ficting/static/js/main.668a9713.js",
     "static/media/sticker.webp": "/kpi-ficting/static/media/sticker.c146740dd752f177c80a.webp",
     "static/media/big-tests.svg": "/kpi-ficting/static/media/big-tests.9e729c5be1ba24b725eff07db130a757.svg",
     "static/media/tests-black.svg": "/kpi-ficting/static/media/tests-black.bcbee50babd756dc09c4f3e6db7154f1.svg",
@@ -29,13 +29,14 @@
     "static/media/score.svg": "/kpi-ficting/static/media/score.7473515e86b4235e239f9a5ebb1ed9e2.svg",
     "static/media/arrows.svg": "/kpi-ficting/static/media/arrows.57a772d8678c03ad2e44ebdc209560b8.svg",
     "static/media/arrow-down.svg": "/kpi-ficting/static/media/arrow-down.6a19d144ffdf6dfc7ec8.svg",
+    "static/media/email.svg": "/kpi-ficting/static/media/email.339ee223154f98a071b16b35279f970d.svg",
     "static/media/create-tests.svg": "/kpi-ficting/static/media/create-tests.4a8b6a338ac3e4ea13ba1b761897cbff.svg",
     "static/media/delete.svg": "/kpi-ficting/static/media/delete.5742de76f16c3c685c3a257260b27e42.svg",
-    "main.2aade8b9.css.map": "/kpi-ficting/static/css/main.2aade8b9.css.map",
-    "main.5102b96d.js.map": "/kpi-ficting/static/js/main.5102b96d.js.map"
+    "main.ff4b85aa.css.map": "/kpi-ficting/static/css/main.ff4b85aa.css.map",
+    "main.668a9713.js.map": "/kpi-ficting/static/js/main.668a9713.js.map"
   },
   "entrypoints": [
-    "static/css/main.2aade8b9.css",
-    "static/js/main.5102b96d.js"
+    "static/css/main.ff4b85aa.css",
+    "static/js/main.668a9713.js"
   ]
 }
