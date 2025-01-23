@@ -8,7 +8,7 @@ import {
 import Cookies from 'js-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Questions from '../components/creation/Questions';
-import { FaPlus, FaFolderPlus, FaCheck, FaRobot } from 'react-icons/fa';
+import { FaPlus, FaCheck, FaRobot } from 'react-icons/fa';
 
 function CollectionCreation() {
   const location = useLocation();
@@ -19,6 +19,8 @@ function CollectionCreation() {
   const [prompt, setPrompt] = useState(null); // Для налаштування запиту
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  console.log("govno")
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);

@@ -39,6 +39,18 @@ function Register() {
       firstName,
       lastName,
       password,
+    })
+    .then((response) => {
+      Cookies.set('token', response.token);
+      setEmail('');
+      setFirstName('');
+      setLastName('');
+      setPassword('');
+      setPasswordConfirmation('');
+      navigate('/tests');
+    })
+    .catch((error) => {
+      setErrorMessage(error.message);
     });
   };
 

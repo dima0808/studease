@@ -27,7 +27,7 @@ function NotFoundTest({ isTest = true }) {
       </span>
       <div className="create-test">
         Скоріш{' '}
-        <Link className="link-to-create" to={`/create-collections`}>
+        <Link className="link-to-create" to={`/create-collection`}>
           створи{' '}
         </Link>
         свою колекцію

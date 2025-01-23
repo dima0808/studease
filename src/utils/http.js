@@ -14,8 +14,19 @@ export async function login(data) {
   }
   return resData;
 }
-export function register(data) {
-  console.log(data);
+export async function register(data) {
+  const response = await fetch(`${HTTP_PROTOCOL}${SERVER_IP}${SERVER_PORT}/api/v1/auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+  return resData;
 }
 
 export async function getAllTests(token) {
