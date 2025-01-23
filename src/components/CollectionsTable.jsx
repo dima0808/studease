@@ -5,12 +5,14 @@ import NotFoundTest from './NotFoundTest';
 import { deleteCollectionByName, getAllCollections } from '../utils/http';
 import Cookies from 'js-cookie';
 import CollectionRow from './CollectionRow';
+import RowLoader from './RowLoader';
 
 const CollectionsTable = () => {
   const [collections, setCollections] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedCollections, setSelectedCollections] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = (value) => {
     setSearchValue(value);
@@ -50,8 +52,12 @@ const CollectionsTable = () => {
 
   useEffect(() => {
     const token = Cookies.get('token');
+    setIsLoading(true);
     getAllCollections(token)
-      .then((data) => setCollections(data.collections))
+      .then((data) => {
+        setCollections(data.collections);
+        setIsLoading(false);
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -64,43 +70,38 @@ const CollectionsTable = () => {
         isTest={false}
       />
       <div className="session-table">
-        {filteredCollections.length === 0 ? (
-          <NotFoundTest isTest={false} />
-        ) : (
-          <>
-            <div className="session-table__header">
-              <div className="session-table__header-checkbox">
-                <input
-                  type="checkbox"
-                  id="selectAll"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                />
-                <label htmlFor="selectAll"></label>
-              </div>
-              <div className="session-table__header-title">Title</div>
-              <div className="session-table__header-start-date transparent">Start date</div>
-              <div className="session-table__header-end-date transparent">End date</div>
-              <div className="session-table__header-status transparent">Status</div>
-              <div className="session-table__header-sessions">Questions</div>
-              <div className="session-table__header-actions">Actions</div>
-            </div>
-            <div className="session-table__body">
-              {filteredCollections.map((collection) => (
-                <CollectionRow
-                  key={collection.id}
-                  id={collection.id}
-                  name={collection.name}
-                  questionsCount={collection.questionsCount}
-                  selectAll={selectAll}
-                  onDelete={handleDeleteCollection}
-                  setSelectedCollections={setSelectedCollections}
-                  isTest={false}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        <div className="session-table__header">
+          <div className="session-table__header-checkbox">
+            <input type="checkbox" id="selectAll" checked={selectAll} onChange={handleSelectAll} />
+            <label htmlFor="selectAll"></label>
+          </div>
+          <div className="session-table__header-title">Title</div>
+          <div className="session-table__header-start-date transparent">Start date</div>
+          <div className="session-table__header-end-date transparent">End date</div>
+          <div className="session-table__header-status transparent">Status</div>
+          <div className="session-table__header-sessions">Questions</div>
+          <div className="session-table__header-actions">Actions</div>
+        </div>
+        <div className="session-table__body">
+          {isLoading ? (
+            [...Array(5)].map((_, index) => <RowLoader key={index} />)
+          ) : filteredCollections.length === 0 ? (
+            <NotFoundTest isTest={false} />
+          ) : (
+            filteredCollections.map((collection) => (
+              <CollectionRow
+                key={collection.id}
+                id={collection.id}
+                name={collection.name}
+                questionsCount={collection.questionsCount}
+                selectAll={selectAll}
+                onDelete={handleDeleteCollection}
+                setSelectedCollections={setSelectedCollections}
+                isTest={false}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

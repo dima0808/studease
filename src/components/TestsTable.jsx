@@ -5,12 +5,14 @@ import SessionRow from './SessionRow';
 import { deleteTestById, getAllTests } from '../utils/http';
 import Cookies from 'js-cookie';
 import NotFoundTest from './NotFoundTest';
+import RowLoader from './RowLoader';
 
 const TestsTable = () => {
   const [tests, setTests] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedTests, setSelectedTests] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = (value) => {
     setSearchValue(value);
@@ -48,8 +50,12 @@ const TestsTable = () => {
 
   useEffect(() => {
     const token = Cookies.get('token');
+    setIsLoading(true);
     getAllTests(token)
-      .then((data) => setTests(data.tests))
+      .then((data) => {
+        setTests(data.tests);
+        setIsLoading(false);
+      })
       .catch((error) => console.error(error));
   }, []);
 
@@ -57,46 +63,41 @@ const TestsTable = () => {
     <div className="tests-table">
       <Header title={'Tests'} onSearch={handleSearch} deleteSelectedTests={deleteSelectedTests} />
       <div className="session-table">
-        {filteredTests.length === 0 ? (
-          <NotFoundTest />
-        ) : (
-          <>
-            <div className="session-table__header">
-              <div className="session-table__header-checkbox">
-                <input
-                  type="checkbox"
-                  id="selectAll"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                />
-                <label htmlFor="selectAll"></label>
-              </div>
-              <div className="session-table__header-title">Title</div>
-              <div className="session-table__header-start-date">Start date</div>
-              <div className="session-table__header-end-date">End date</div>
-              <div className="session-table__header-status">Status</div>
-              <div className="session-table__header-sessions">
-                <span>Active sessions</span>
-              </div>
-              <div className="session-table__header-actions">Actions</div>
-            </div>
-            <div className="session-table__body">
-              {filteredTests.map((test) => (
-                <SessionRow
-                  key={test.id}
-                  id={test.id}
-                  name={test.name}
-                  openDate={test.openDate}
-                  deadline={test.deadline}
-                  startedSessions={test.startedSessions}
-                  selectAll={selectAll}
-                  onDelete={handleDeleteTest}
-                  setSelectedTests={setSelectedTests}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        <div className="session-table__header">
+          <div className="session-table__header-checkbox">
+            <input type="checkbox" id="selectAll" checked={selectAll} onChange={handleSelectAll} />
+            <label htmlFor="selectAll"></label>
+          </div>
+          <div className="session-table__header-title">Title</div>
+          <div className="session-table__header-start-date">Start date</div>
+          <div className="session-table__header-end-date">End date</div>
+          <div className="session-table__header-status">Status</div>
+          <div className="session-table__header-sessions">
+            <span>Active sessions</span>
+          </div>
+          <div className="session-table__header-actions">Actions</div>
+        </div>
+        <div className="session-table__body">
+          {isLoading ? (
+            [...Array(5)].map((_, index) => <RowLoader key={index} />)
+          ) : filteredTests.length === 0 ? (
+            <NotFoundTest isTest={true} />
+          ) : (
+            filteredTests.map((test) => (
+              <SessionRow
+                key={test.id}
+                id={test.id}
+                name={test.name}
+                openDate={test.openDate}
+                deadline={test.deadline}
+                startedSessions={test.startedSessions}
+                selectAll={selectAll}
+                onDelete={handleDeleteTest}
+                setSelectedTests={setSelectedTests}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
