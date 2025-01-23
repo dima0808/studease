@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import { login } from '../utils/http';
+import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {login} from '../utils/http';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import human from '../assets/icons/human.svg';
-import password from '../assets/icons/password.svg';
-import {CLIENT_PATH} from "../utils/constraints";
+import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
+import emailIcon from '../assets/icons/email.svg';
+import passwordIcon from '../assets/icons/password.svg';
+import {CLIENT_PATH} from '../utils/constraints';
 
 function Login() {
   const navigate = useNavigate();
 
-  const usernameRef = useRef();
-  const passwordRef = useRef();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -23,56 +24,68 @@ function Login() {
 
   console.log(CLIENT_PATH);
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    login({
+      email: email,
+      password,
+    })
+    .then((response) => {
+      Cookies.set('token', response.token);
+      setEmail('');
+      setPassword('');
+      navigate('/tests');
+    })
+    .catch((error) => {
+      setErrorMessage(error.message);
+    });
+  };
+
   return (
-    <div className="container__center">
-      <div className="login">
-        <div className="login__title">
-          <h1>KPI FICTING</h1>
-        </div>
-        <div className="login__fields">
-          <div className="login__field">
-            <div className="login__img">
-              <img src={human} alt="human" />
-            </div>
-            <input
-              ref={usernameRef}
-              type="text"
-              placeholder="Username"
-              className="login__input"
-            />
+      <form onSubmit={onSubmit} className="container__center">
+        <div className="login">
+          <div className="login__title">
+            <h1>KPI FICTING</h1>
           </div>
-          <div className="login__field">
-            <div className="login__img">
-              <img src={password} alt="password" />
+          <div className="login__fields">
+            <div className="login__field">
+              <div className="login__img">
+                <img src={emailIcon} alt="Email"/>
+              </div>
+              <input
+                  value={email}
+                  type="text"
+                  required
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                  placeholder="Email"
+                  className="login__input"
+              />
             </div>
-            <input
-              ref={passwordRef}
-              type="password"
-              placeholder="Password"
-              className="login__input"
-            />
+            <div className="login__field">
+              <div className="login__img">
+                <img src={passwordIcon} alt="password"/>
+              </div>
+              <input
+                  value={password}
+                  required
+                  type="password"
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Password"
+                  className="login__input"
+              />
+            </div>
           </div>
+          <button type="submit" className="login__button">
+            Login
+          </button>
+          <Link title="Register" to="/register" className="login__link">
+            Do not have an account?
+          </Link>
+          {errorMessage && <div className="login__error">{errorMessage}</div>}
         </div>
-        <button
-          onClick={() => {
-            login({
-              username: usernameRef.current?.value,
-              password: passwordRef.current?.value,
-            })
-              .then((response) => {
-                Cookies.set('token', response.token);
-                navigate('/tests');
-              })
-              .catch((error) => {
-                setErrorMessage(error.message);
-              });
-          }}
-          className="login__button">
-          Login
-        </button>
-        {errorMessage && <div className="login__error">{errorMessage}</div>}
-      </div>
-    </div>
+      </form>
   );
 }
 

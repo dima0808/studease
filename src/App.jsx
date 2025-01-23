@@ -9,12 +9,14 @@ import SessionDetails from './pages/SessionDetails';
 import CollectionCreation from './pages/CollectionCreation';
 import CollectionInfo from './pages/CollectionInfo';
 import ProtectedRoute from './components/ProtectedRoute';
+import Register from './pages/Register';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={''}>
         <Route index element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="tests" element={<ProtectedRoute element={<Home />} />} />
         <Route path="collections" element={<ProtectedRoute element={<Home />} />} />
         <Route path=":id" element={<Test />} />
