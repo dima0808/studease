@@ -14,6 +14,8 @@ import Questions from '../components/creation/Questions';
 import Trash from '../assets/icons/trash.svg';
 import { FaPlus, FaFolderPlus, FaCheck, FaRobot } from 'react-icons/fa';
 import Generation from '../components/Generation';
+import ErrorGeneration from '../components/ErrorGeneration';
+import BackButton from '../components/BackButton';
 
 function TestCreation() {
   const location = useLocation();
@@ -28,7 +30,8 @@ function TestCreation() {
   const [prompt, setPrompt] = useState(null);
   const [collections, setCollections] = useState([]);
   const [errors, setErrors] = useState({});
-  const [isGenerating, setIsGenerating] = useState(true);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [errorGenerate, setErrorGenerate] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -142,9 +145,12 @@ function TestCreation() {
         });
         setPrompt(null);
         setIsGenerating(false);
+        setErrorGenerate(false);
       })
       .catch((error) => {
         setErrors((prevErrors) => ({ ...prevErrors, submit: error.message }));
+        setIsGenerating(false);
+        setErrorGenerate(true);
       });
   };
 
@@ -210,6 +216,7 @@ function TestCreation() {
 
   return (
     <>
+      <BackButton />
       <div className="test-creation">
         <h2>Create a Test</h2>
         <div className="test-creation__name">
@@ -279,6 +286,8 @@ function TestCreation() {
           <div className="question-form">
             {isGenerating ? (
               <Generation />
+            ) : errorGenerate ? (
+              <ErrorGeneration />
             ) : (
               <>
                 <div className="collection__controll">
@@ -397,7 +406,6 @@ function TestCreation() {
         <button onClick={handleSubmit}>
           <FaCheck /> Create Test
         </button>
-        <button onClick={() => setIsGenerating(!isGenerating)}>Generation</button>
       </div>
       {errors.submit &&
         errors.submit.split(',').map((error, index) => (

@@ -12,7 +12,8 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
   const navigate = useNavigate();
 
   const handleInfo = () => {
-    window.open(`#/${isTest ? 'tests' : 'collections'}/${id}`, '_blank');
+    navigate(`/${isTest ? 'tests' : 'collections'}/${id}`);
+    // window.open(`#/${isTest ? 'tests' : 'collections'}/${id}`, '_blank');
     setIsMenuOpen(false);
   };
 
@@ -25,7 +26,7 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       onDelete(id);
     }
-  }
+  };
 
   const handleMenuToggle = (e) => {
     e.stopPropagation();

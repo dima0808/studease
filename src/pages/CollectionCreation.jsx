@@ -9,6 +9,9 @@ import Cookies from 'js-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Questions from '../components/creation/Questions';
 import { FaPlus, FaCheck, FaRobot } from 'react-icons/fa';
+import Generation from '../components/Generation';
+import ErrorGeneration from '../components/ErrorGeneration';
+import BackButton from '../components/BackButton';
 
 function CollectionCreation() {
   const location = useLocation();
@@ -18,9 +21,9 @@ function CollectionCreation() {
   });
   const [prompt, setPrompt] = useState(null); // Для налаштування запиту
   const [errors, setErrors] = useState({});
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [errorGenerate, setErrorGenerate] = useState(false);
   const navigate = useNavigate();
-
-  console.log("govno")
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -71,6 +74,7 @@ function CollectionCreation() {
 
   const handleGenerateQuestions = (prompt) => {
     const token = Cookies.get('token');
+    setIsGenerating(true);
     generateQuestions(prompt, token)
       .then((data) => {
         setCollection({
@@ -92,9 +96,13 @@ function CollectionCreation() {
           ],
         });
         setPrompt(null);
+        setIsGenerating(false);
+        setErrorGenerate(false);
       })
       .catch((error) => {
         setErrors((prevErrors) => ({ ...prevErrors, submit: error.message }));
+        setIsGenerating(false);
+        setErrorGenerate(true);
       });
   };
 
@@ -133,6 +141,7 @@ function CollectionCreation() {
 
   return (
     <>
+      <BackButton />
       <div className="test-creation">
         <h2>Create a Collection</h2>
         <div>
@@ -159,48 +168,56 @@ function CollectionCreation() {
       {prompt && (
         <div className="test-creation__questions">
           <div className="question-form">
-            <div className="collection__controll">
-              <label>Theme:</label>
-              <input
-                type="text"
-                name="theme"
-                placeholder="Theme"
-                value={prompt.theme}
-                onChange={(e) => setPrompt({ ...prompt, theme: e.target.value })}
-              />
-            </div>
-            <div className="answer__controller--score">
-              <label>Points:</label>
-              <input
-                type="text"
-                name="points"
-                placeholder="Points"
-                value={prompt.points}
-                onChange={(e) => setPrompt({ ...prompt, points: e.target.value })}
-              />
-            </div>
-            <div className="answer__controller--type">
-              <label>Type:</label>
-              <select
-                name="type"
-                value={prompt.type}
-                onChange={(e) => setPrompt({ ...prompt, type: e.target.value })}>
-                <option value="multiple_choices">Multiple Choices</option>
-                <option value="single_choice">Single Choice</option>
-                <option value="matching">Matching</option>
-              </select>
-            </div>
-            <div className="collection__controll">
-              <label>Questions count:</label>
-              <input
-                type="number"
-                name="questionsCount"
-                value={prompt.questionsCount}
-                onChange={(e) => setPrompt({ ...prompt, questionsCount: e.target.value })}
-              />
-            </div>
-            <button onClick={() => setPrompt(null)}>Cancel</button>
-            <button onClick={() => handleGenerateQuestions(prompt)}>Generate</button>
+            {isGenerating ? (
+              <Generation />
+            ) : errorGenerate ? (
+              <ErrorGeneration />
+            ) : (
+              <>
+                <div className="collection__controll">
+                  <label>Theme:</label>
+                  <input
+                    type="text"
+                    name="theme"
+                    placeholder="Theme"
+                    value={prompt.theme}
+                    onChange={(e) => setPrompt({ ...prompt, theme: e.target.value })}
+                  />
+                </div>
+                <div className="answer__controller--score">
+                  <label>Points:</label>
+                  <input
+                    type="text"
+                    name="points"
+                    placeholder="Points"
+                    value={prompt.points}
+                    onChange={(e) => setPrompt({ ...prompt, points: e.target.value })}
+                  />
+                </div>
+                <div className="answer__controller--type">
+                  <label>Type:</label>
+                  <select
+                    name="type"
+                    value={prompt.type}
+                    onChange={(e) => setPrompt({ ...prompt, type: e.target.value })}>
+                    <option value="multiple_choices">Multiple Choices</option>
+                    <option value="single_choice">Single Choice</option>
+                    <option value="matching">Matching</option>
+                  </select>
+                </div>
+                <div className="collection__controll">
+                  <label>Questions count:</label>
+                  <input
+                    type="number"
+                    name="questionsCount"
+                    value={prompt.questionsCount}
+                    onChange={(e) => setPrompt({ ...prompt, questionsCount: e.target.value })}
+                  />
+                </div>
+                <button onClick={() => setPrompt(null)}>Cancel</button>
+                <button onClick={() => handleGenerateQuestions(prompt)}>Generate</button>
+              </>
+            )}
           </div>
         </div>
       )}

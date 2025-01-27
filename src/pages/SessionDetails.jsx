@@ -1,12 +1,13 @@
-import {calculateTimeDifference} from "../utils/timeUtils";
-import SingleChoiceReview from "../components/review/SingleChoiceReview";
-import MultipleChoicesReview from "../components/review/MultipleChoicesReview";
-import MatchPairsReview from "../components/review/MatchPairsReview";
-import download from "../assets/icons/download.svg";
-import React, {useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
-import Cookies from "js-cookie";
-import {getFinishedSessionsByTestId} from "../utils/http";
+import { calculateTimeDifference } from '../utils/timeUtils';
+import SingleChoiceReview from '../components/review/SingleChoiceReview';
+import MultipleChoicesReview from '../components/review/MultipleChoicesReview';
+import MatchPairsReview from '../components/review/MatchPairsReview';
+import download from '../assets/icons/download.svg';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { getFinishedSessionsByTestId } from '../utils/http';
+import BackButton from '../components/BackButton';
 
 function SessionDetails() {
   const location = useLocation();
@@ -17,9 +18,11 @@ function SessionDetails() {
     const params = new URLSearchParams(location.search);
     const credentials = params.get('credentials');
     if (credentials) {
-      getFinishedSessionsByTestId(id, Cookies.get('token'), credentials).then((data) => {
-        setTestSession(data);
-      }).catch((error) => console.error('Error fetching finished sessions: ', error));
+      getFinishedSessionsByTestId(id, Cookies.get('token'), credentials)
+        .then((data) => {
+          setTestSession(data);
+        })
+        .catch((error) => console.error('Error fetching finished sessions: ', error));
     }
   }, [id, location.search]);
 
@@ -90,10 +93,11 @@ function SessionDetails() {
           </div>
         ))}
         <button onClick={() => window.print()} className="test-info__pdf-button">
-          <img src={download} alt="download"/>
+          <img src={download} alt="download" />
           Download my answers
         </button>
       </div>
+      <BackButton />
     </div>
   );
 }

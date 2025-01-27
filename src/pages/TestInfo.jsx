@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 import { calculateTimeDifference } from '../utils/timeUtils';
 import { CLIENT_PATH } from '../utils/constraints';
 import Questions from '../components/info/Questions';
+import BackButton from '../components/BackButton';
 
 function TestInfo() {
   const { id } = useParams();
@@ -180,6 +181,7 @@ function TestInfo() {
           ))}
         </tbody>
       </table>
+      <BackButton />
     </div>
   );
 }
