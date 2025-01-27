@@ -82,7 +82,8 @@ function TestCreation() {
   }, [location.search]);
 
   useEffect(() => {
-    getAllCollections()
+    const token = Cookies.get('token');
+    getAllCollections(token)
       .then((data) => setCollections(data.collections))
       .catch((error) => console.error('Error fetching collections:', error));
   }, []);
