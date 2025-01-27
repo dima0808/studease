@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/kpi-ficting/static/css/main.ff4b85aa.css",
-    "main.js": "/kpi-ficting/static/js/main.668a9713.js",
+    "main.css": "/kpi-ficting/static/css/main.78cd0421.css",
+    "main.js": "/kpi-ficting/static/js/main.414f4f62.js",
     "static/media/sticker.webp": "/kpi-ficting/static/media/sticker.c146740dd752f177c80a.webp",
     "static/media/big-tests.svg": "/kpi-ficting/static/media/big-tests.9e729c5be1ba24b725eff07db130a757.svg",
     "static/media/tests-black.svg": "/kpi-ficting/static/media/tests-black.bcbee50babd756dc09c4f3e6db7154f1.svg",
@@ -32,11 +32,11 @@
     "static/media/email.svg": "/kpi-ficting/static/media/email.339ee223154f98a071b16b35279f970d.svg",
     "static/media/create-tests.svg": "/kpi-ficting/static/media/create-tests.4a8b6a338ac3e4ea13ba1b761897cbff.svg",
     "static/media/delete.svg": "/kpi-ficting/static/media/delete.5742de76f16c3c685c3a257260b27e42.svg",
-    "main.ff4b85aa.css.map": "/kpi-ficting/static/css/main.ff4b85aa.css.map",
-    "main.668a9713.js.map": "/kpi-ficting/static/js/main.668a9713.js.map"
+    "main.78cd0421.css.map": "/kpi-ficting/static/css/main.78cd0421.css.map",
+    "main.414f4f62.js.map": "/kpi-ficting/static/js/main.414f4f62.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff4b85aa.css",
-    "static/js/main.668a9713.js"
+    "static/css/main.78cd0421.css",
+    "static/js/main.414f4f62.js"
   ]
 }
