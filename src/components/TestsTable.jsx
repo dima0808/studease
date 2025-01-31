@@ -6,6 +6,8 @@ import { deleteTestById, getAllTests } from '../utils/http';
 import Cookies from 'js-cookie';
 import NotFoundTest from './NotFoundTest';
 import RowLoader from './RowLoader';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 const TestsTable = () => {
   const [tests, setTests] = useState([]);
@@ -13,6 +15,7 @@ const TestsTable = () => {
   const [selectedTests, setSelectedTests] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleSearch = (value) => {
     setSearchValue(value);
@@ -61,21 +64,32 @@ const TestsTable = () => {
 
   return (
     <div className="tests-table">
-      <Header title={'Tests'} onSearch={handleSearch} deleteSelectedTests={deleteSelectedTests} />
+      <Header
+        title={t('test_page.title')}
+        onSearch={handleSearch}
+        deleteSelectedTests={deleteSelectedTests}
+      />
       <div className="session-table">
         <div className="session-table__header">
           <div className="session-table__header-checkbox">
             <input type="checkbox" id="selectAll" checked={selectAll} onChange={handleSelectAll} />
             <label htmlFor="selectAll"></label>
           </div>
-          <div className="session-table__header-title">Title</div>
-          <div className="session-table__header-start-date">Start date</div>
-          <div className="session-table__header-end-date">End date</div>
-          <div className="session-table__header-status">Status</div>
+          <div className="session-table__header-title">{t('test_page.session.title')}</div>
+          <div className="session-table__header-start-date">{t('test_page.session.startDate')}</div>
+          <div className="session-table__header-end-date">{t('test_page.session.endDate')}</div>
+          <div className="session-table__header-status">{t('test_page.session.status')}</div>
           <div className="session-table__header-sessions">
-            <span>Active sessions</span>
+            <span
+              style={
+                i18next.language === 'uk'
+                  ? { transform: 'translate(-50%, -50%)' }
+                  : { transform: 'translate(-50%, -75%)' }
+              }>
+              {t('test_page.session.activeSession')}
+            </span>
           </div>
-          <div className="session-table__header-actions">Actions</div>
+          <div className="session-table__header-actions">{t('test_page.session.actions')}</div>
         </div>
         <div className="session-table__body">
           {isLoading ? (

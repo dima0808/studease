@@ -6,11 +6,13 @@ import importImg from '../assets/icons/import.svg';
 import exportImg from '../assets/icons/export.svg';
 import remove from '../assets/icons/remove.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const dropdownRef = useRef(null);
 
@@ -39,7 +41,7 @@ const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
         className={`dropdown-toggle header-toggle ${
           isMenuOpen ? 'dropdown-toggle--inactive' : ''
         }`}>
-        <span>Actions</span>
+        <span>{t('dropdownMenu.title')}</span>
         <svg
           width="22"
           height="22"
@@ -64,15 +66,15 @@ const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
             }}
             className="dropdown__item">
             <img src={create} alt="info" />
-            Create
+            {t('dropdownMenu.create')}
           </div>
           <div className="dropdown__item">
             <img src={importImg} alt="clone" />
-            Import
+            {t('dropdownMenu.import')}
           </div>
           <div className="dropdown__item">
             <img src={exportImg} alt="edit" />
-            Export
+            {t('dropdownMenu.export')}
           </div>
           <div
             onClick={() => {
@@ -81,7 +83,7 @@ const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
             }}
             className="dropdown__item remove">
             <img src={remove} alt="remove" />
-            Remove
+            {t('dropdownMenu.remove')}
           </div>
         </div>
       )}

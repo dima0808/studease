@@ -2,9 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import searchImg from '../assets/icons/search.svg';
 import deleteImg from '../assets/icons/delete.svg';
+import { useTranslation } from 'react-i18next';
 
 function Search({ onSearch, isTest = true }) {
   const [searchValue, setSearchValue] = useState('');
+  const { t } = useTranslation();
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -24,7 +26,7 @@ function Search({ onSearch, isTest = true }) {
         onChange={handleSearch}
         value={searchValue}
         type="text"
-        placeholder={`search ${isTest ? 'test' : 'collection'}...`}
+        placeholder={`${isTest ? t('search.test') : t('search.collection')}`}
         className="search__input"
       />
       {searchValue && (
