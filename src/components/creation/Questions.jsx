@@ -1,9 +1,12 @@
 import React from 'react';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 import { addQuestionToCollection } from '../../utils/http';
 import Trash from '../../assets/icons/trash.svg';
 
 function Questions({ instance, collections, errors, setInstance, setErrors }) {
+  const { t } = useTranslation();
+
   const handleDeleteQuestion = (questionIndex) => {
     const questions = [...instance.questions];
     questions.splice(questionIndex, 1);
@@ -139,7 +142,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
           <div className={'question-form ' + (question.isSaved ? ' border-saved' : '')}>
             {collections && (
               <div className="question__collection">
-                <label>Save to collection:</label>
+                <label>{t('create_page.questionForm.saveToCollection')}:</label>
                 <select
                   name="collection"
                   value={question.collection}
@@ -152,7 +155,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                   ))}
                 </select>
                 <button type="button" onClick={() => handleAddQuestionToCollection(qIndex)}>
-                  Save into collection
+                  {t('create_page.questionForm.buttons.saveToCollection')}
                 </button>
                 {errors[`question-collection-${qIndex}-0`] && (
                   <div className="error-message">{errors[`question-collection-${qIndex}-0`]}</div>
@@ -167,7 +170,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                 <input
                   type="text"
                   name="content"
-                  placeholder="Question text"
+                  placeholder={t('create_page.questionForm.textQuestion')}
                   value={question.content}
                   onChange={(e) => handleQuestionChange(qIndex, e)}
                   onBlur={(e) => validateField('question-content', e.target.value, qIndex)}
@@ -181,7 +184,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                 <input
                   type="text"
                   name="points"
-                  placeholder="Points"
+                  placeholder={t('create_page.questionForm.points')}
                   value={question.points}
                   onChange={(e) => handleQuestionChange(qIndex, e)}
                   onBlur={(e) => validateField('question-points', e.target.value, qIndex)}
@@ -195,16 +198,19 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                 <select
                   name="type"
                   value={question.type}
-                  onChange={(e) => handleQuestionTypeChange(qIndex, e)}
-                >
-                  <option value="multiple_choices">Multiple Choices</option>
-                  <option value="single_choice">Single Choice</option>
-                  <option value="matching">Matching</option>
+                  onChange={(e) => handleQuestionTypeChange(qIndex, e)}>
+                  <option value="multiple_choices">
+                    {t('create_page.questionForm.option.multipleChoices')}
+                  </option>
+                  <option value="single_choice">
+                    {t('create_page.questionForm.option.singleChoice')}
+                  </option>
+                  <option value="matching">{t('create_page.questionForm.option.matching')}</option>
                 </select>
               </div>
             </div>
             <button className="answer-add" onClick={() => handleAddAnswer(qIndex)}>
-              Add answer
+              {t('create_page.questionForm.buttons.addAnswer')}
             </button>
             <div className="answer-wrapper__container">
               {question.answers.map((answer, aIndex) => (
@@ -216,7 +222,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                           type="text"
                           name="leftOption"
                           value={answer.leftOption}
-                          placeholder="Question text"
+                          placeholder={t('create_page.questionForm.textQuestion')}
                           onChange={(e) => handleAnswerChange(qIndex, aIndex, e)}
                           onBlur={(e) =>
                             validateField('question-answer-left', e.target.value, qIndex, aIndex)
@@ -236,7 +242,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                           type="text"
                           name="rightOption"
                           value={answer.rightOption}
-                          placeholder="Answer text"
+                          placeholder={t('create_page.questionForm.textAnswer')}
                           onChange={(e) => handleAnswerChange(qIndex, aIndex, e)}
                           onBlur={(e) =>
                             validateField('question-answer-right', e.target.value, qIndex, aIndex)
@@ -298,7 +304,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                           <input
                             type="text"
                             name="content"
-                            placeholder="Answer text"
+                            placeholder={t('create_page.questionForm.textAnswer')}
                             value={answer.content}
                             onChange={(e) => handleAnswerChange(qIndex, aIndex, e)}
                             onBlur={(e) =>
@@ -328,7 +334,7 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
             </div>
             <button className="questions-delete" onClick={() => handleDeleteQuestion(qIndex)}>
               <img src={Trash} alt="delete" />
-              Remove
+              {t('create_page.questionForm.buttons.remove')}
             </button>
           </div>
         </div>

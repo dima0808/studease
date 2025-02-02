@@ -20,6 +20,58 @@ export const uk = {
       actions: 'Дії',
     },
   },
+  create_page: {
+    title: 'Створити тест',
+    form: {
+      title: 'Назва',
+      openDate: 'Дата початку',
+      deadline: 'Дата закінчення',
+      minutesToComplete: 'Час на проходження',
+      buttons: {
+        submit: 'Створити',
+        addQuestion: 'Додати питання',
+        generateWithAI: 'Згенерувати питання за допомогою AI',
+        addCollection: 'Додати колекцію',
+      },
+    },
+    questionForm: {
+      saveToCollection: 'Зберегти в колекцію',
+      option: {
+        none: 'Немає',
+        multipleChoices: 'Множинний вибір',
+        singleChoice: 'Одиночний вибір',
+        matching: 'Відповідність',
+      },
+      buttons: {
+        saveToCollection: 'Зберегти в колекцію',
+        addAnswer: 'Додати відповідь',
+        remove: 'Видалити',
+      },
+      textQuestion: 'Текст запитання',
+      textAnswer: 'Текст відповіді',
+      points: 'Бали',
+    },
+    generateForm: {
+      theme: 'Тема',
+      points: 'Бали',
+      type: 'Тип',
+      questionCount: 'Кількість питань',
+      button: 'Згенерувати',
+    },
+    collectionForm: {
+      name: 'Назва колекції',
+    },
+  },
+  collection_creation_page: {
+    title: 'Створити колекцію',
+    form: {
+      title: 'Назва',
+      description: 'Опис',
+      buttons: {
+        submit: 'Створити',
+      },
+    },
+  },
   login_page: {
     email: 'Електронна пошта',
     password: 'Пароль',
