@@ -6,6 +6,7 @@ import { deleteCollectionByName, getAllCollections } from '../utils/http';
 import Cookies from 'js-cookie';
 import CollectionRow from './CollectionRow';
 import RowLoader from './RowLoader';
+import { useTranslation } from 'react-i18next';
 
 const CollectionsTable = () => {
   const [collections, setCollections] = useState([]);
@@ -13,6 +14,7 @@ const CollectionsTable = () => {
   const [selectedCollections, setSelectedCollections] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   const handleSearch = (value) => {
     setSearchValue(value);
@@ -64,7 +66,7 @@ const CollectionsTable = () => {
   return (
     <div className="tests-table">
       <Header
-        title={'Collections'}
+        title={t('collection_page.title')}
         onSearch={handleSearch}
         deleteSelectedTests={deleteSelectedCollections}
         isTest={false}
@@ -75,12 +77,16 @@ const CollectionsTable = () => {
             <input type="checkbox" id="selectAll" checked={selectAll} onChange={handleSelectAll} />
             <label htmlFor="selectAll"></label>
           </div>
-          <div className="session-table__header-title">Title</div>
+          <div className="session-table__header-title">{t('collection_page.collection.title')}</div>
           <div className="session-table__header-start-date transparent">Start date</div>
           <div className="session-table__header-end-date transparent">End date</div>
           <div className="session-table__header-status transparent">Status</div>
-          <div className="session-table__header-sessions">Questions</div>
-          <div className="session-table__header-actions">Actions</div>
+          <div className="session-table__header-sessions">
+            {t('collection_page.collection.questions')}
+          </div>
+          <div className="session-table__header-actions">
+            {t('collection_page.collection.actions')}
+          </div>
         </div>
         <div className="session-table__body">
           {isLoading ? (

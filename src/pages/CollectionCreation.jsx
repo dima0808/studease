@@ -6,6 +6,7 @@ import {
   generateQuestions,
 } from '../utils/http';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Questions from '../components/creation/Questions';
 import { FaPlus, FaCheck, FaRobot } from 'react-icons/fa';
@@ -24,6 +25,7 @@ function CollectionCreation() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorGenerate, setErrorGenerate] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -143,9 +145,9 @@ function CollectionCreation() {
     <>
       <BackButton />
       <div className="test-creation">
-        <h2>Create a Collection</h2>
+        <h2>{t('collection_creation_page.title')}</h2>
         <div>
-          <label>Name:</label>
+          <label>{t('collection_creation_page.form.title')}:</label>
           <input
             type="text"
             name="name"
@@ -175,17 +177,17 @@ function CollectionCreation() {
             ) : (
               <>
                 <div className="collection__controll">
-                  <label>Theme:</label>
+                  <label>{t('create_page.generateForm.theme')}:</label>
                   <input
                     type="text"
                     name="theme"
-                    placeholder="Theme"
+                    placeholder={t('create_page.generateForm.theme')}
                     value={prompt.theme}
                     onChange={(e) => setPrompt({ ...prompt, theme: e.target.value })}
                   />
                 </div>
                 <div className="answer__controller--score">
-                  <label>Points:</label>
+                  <label>{t('create_page.generateForm.points')}:</label>
                   <input
                     type="text"
                     name="points"
@@ -195,18 +197,24 @@ function CollectionCreation() {
                   />
                 </div>
                 <div className="answer__controller--type">
-                  <label>Type:</label>
+                  <label>{t('create_page.generateForm.type')}:</label>
                   <select
                     name="type"
                     value={prompt.type}
                     onChange={(e) => setPrompt({ ...prompt, type: e.target.value })}>
-                    <option value="multiple_choices">Multiple Choices</option>
-                    <option value="single_choice">Single Choice</option>
-                    <option value="matching">Matching</option>
+                    <option value="multiple_choices">
+                      {t('create_page.questionForm.option.multipleChoices')}
+                    </option>
+                    <option value="single_choice">
+                      {t('create_page.questionForm.option.singleChoice')}
+                    </option>
+                    <option value="matching">
+                      {t('create_page.questionForm.option.matching')}
+                    </option>
                   </select>
                 </div>
                 <div className="collection__controll">
-                  <label>Questions count:</label>
+                  <label>{t('create_page.generateForm.questionCount')}:</label>
                   <input
                     type="number"
                     name="questionsCount"
@@ -214,8 +222,12 @@ function CollectionCreation() {
                     onChange={(e) => setPrompt({ ...prompt, questionsCount: e.target.value })}
                   />
                 </div>
-                <button onClick={() => setPrompt(null)}>Cancel</button>
-                <button onClick={() => handleGenerateQuestions(prompt)}>Generate</button>
+                <button onClick={() => setPrompt(null)}>
+                  {t('create_page.questionForm.buttons.remove')}
+                </button>
+                <button onClick={() => handleGenerateQuestions(prompt)}>
+                  {t('create_page.generateForm.button')}
+                </button>
               </>
             )}
           </div>
@@ -223,14 +235,15 @@ function CollectionCreation() {
       )}
       <div className="buttons-container">
         <button onClick={handleAddQuestion}>
-          <FaPlus /> Add Question
+          <FaPlus />
+          {t('create_page.form.buttons.addQuestion')}
         </button>
         <button onClick={handleAddQuestionPrompt}>
-          <FaRobot /> Generation with AI
+          <FaRobot /> {t('create_page.form.buttons.generateWithAI')}
         </button>
         <button onClick={handleSubmit}>
           <FaCheck />
-          Create Collection
+          {t('create_page.form.buttons.submit')}
         </button>
       </div>
       {errors.submit &&

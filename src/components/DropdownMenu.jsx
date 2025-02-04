@@ -5,11 +5,13 @@ import info from '../assets/icons/info.svg';
 import clone from '../assets/icons/clone.svg';
 import remove from '../assets/icons/remove.svg';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const DropdownMenu = ({ id, onDelete, isTest = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleInfo = () => {
     navigate(`/${isTest ? 'tests' : 'collections'}/${id}`);
@@ -23,7 +25,7 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
   };
 
   const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
+    if (window.confirm(t('dropdownMenu.confirm'))) {
       onDelete(id);
     }
   };
@@ -51,7 +53,7 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
       <button
         onClick={handleMenuToggle}
         className={`dropdown-toggle ${isMenuOpen ? 'dropdown-toggle--inactive' : ''}`}>
-        <span>Actions</span>
+        <span>{t('dropdownMenu.title')}</span>
         <svg
           width="22"
           height="22"
@@ -70,15 +72,15 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
         <div className="dropdown__menu">
           <div onClick={handleInfo} className="dropdown__item">
             <img src={info} alt="info" />
-            Info
+            {t('dropdownMenu.info')}
           </div>
           <div onClick={handleClone} className="dropdown__item">
             <img src={clone} alt="clone" />
-            Clone
+            {t('dropdownMenu.clone')}
           </div>
           <div onClick={handleDelete} className="dropdown__item remove">
             <img src={remove} alt="remove" />
-            Remove
+            {t('dropdownMenu.remove')}
           </div>
         </div>
       )}

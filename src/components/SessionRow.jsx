@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { truncateText } from '../utils/truncateText.js';
+import { useTranslation } from 'react-i18next';
 
 import DropdownMenu from './DropdownMenu';
 
@@ -18,6 +19,7 @@ const SessionRow = ({
   setSelectedTests,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsSelected(selectAll);
@@ -93,7 +95,7 @@ const SessionRow = ({
       <div className="session-row__status">
         <div className={`status-${status ? 'active' : 'inactive'}`}>
           <div className={`circle-${status ? 'green' : 'red'}`}></div>
-          <span>{status ? 'Active' : 'Inactive'}</span>
+          <span>{status ? t('test_page.session.active') : t('test_page.session.inactive')}</span>
         </div>
       </div>
       <div className="session-row__sessions">

@@ -6,6 +6,7 @@ import download from '../assets/icons/download.svg';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 import { getFinishedSessionsByTestId } from '../utils/http';
 import BackButton from '../components/BackButton';
 
@@ -13,6 +14,7 @@ function SessionDetails() {
   const location = useLocation();
   const { id } = useParams();
   const [testSession, setTestSession] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);

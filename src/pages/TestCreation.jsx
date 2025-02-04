@@ -10,6 +10,7 @@ import {
 } from '../utils/http';
 import Cookies from 'js-cookie';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Questions from '../components/creation/Questions';
 import Trash from '../assets/icons/trash.svg';
 import { FaPlus, FaFolderPlus, FaCheck, FaRobot } from 'react-icons/fa';
@@ -33,6 +34,7 @@ function TestCreation() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorGenerate, setErrorGenerate] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -219,9 +221,9 @@ function TestCreation() {
     <>
       <BackButton />
       <div className="test-creation">
-        <h2>Create a Test</h2>
+        <h2>{t('create_page.title')}</h2>
         <div className="test-creation__name">
-          <label>Name:</label>
+          <label>{t('create_page.form.title')}:</label>
           <input
             type="text"
             name="name"
@@ -233,7 +235,7 @@ function TestCreation() {
           {errors.testName && <div className="error-message">{errors.testName}</div>}
         </div>
         <div>
-          <label>Open Date:</label>
+          <label>{t('create_page.form.openDate')}:</label>
           <input
             type="text"
             name="openDate"
@@ -246,7 +248,7 @@ function TestCreation() {
           {errors.openDate && <div className="error-message">{errors.openDate}</div>}
         </div>
         <div>
-          <label>Deadline:</label>
+          <label>{t('create_page.form.deadline')}:</label>
           <input
             type="text"
             name="deadline"
@@ -259,7 +261,7 @@ function TestCreation() {
           {errors.deadline && <div className="error-message">{errors.deadline}</div>}
         </div>
         <div>
-          <label>Minutes to Complete:</label>
+          <label>{t('create_page.form.minutesToComplete')}:</label>
           <input
             type="number"
             name="minutesToComplete"
@@ -292,7 +294,7 @@ function TestCreation() {
             ) : (
               <>
                 <div className="collection__controll">
-                  <label>Theme:</label>
+                  <label>{t('create_page.generateForm.theme')}:</label>
                   <input
                     type="text"
                     name="theme"
@@ -302,28 +304,34 @@ function TestCreation() {
                   />
                 </div>
                 <div className="answer__controller--score">
-                  <label>Points:</label>
+                  <label>{t('create_page.generateForm.points')}:</label>
                   <input
                     type="text"
                     name="points"
-                    placeholder="Points"
+                    placeholder={t('create_page.generateForm.points')}
                     value={prompt.points}
                     onChange={(e) => setPrompt({ ...prompt, points: e.target.value })}
                   />
                 </div>
                 <div className="answer__controller--type">
-                  <label>Type:</label>
+                  <label>{t('create_page.generateForm.type')}:</label>
                   <select
                     name="type"
                     value={prompt.type}
                     onChange={(e) => setPrompt({ ...prompt, type: e.target.value })}>
-                    <option value="multiple_choices">Multiple Choices</option>
-                    <option value="single_choice">Single Choice</option>
-                    <option value="matching">Matching</option>
+                    <option value="multiple_choices">
+                      {t('create_page.questionForm.option.multipleChoices')}
+                    </option>
+                    <option value="single_choice">
+                      {t('create_page.questionForm.option.singleChoice')}
+                    </option>
+                    <option value="matching">
+                      {t('create_page.questionForm.option.matching')}
+                    </option>
                   </select>
                 </div>
                 <div className="collection__controll">
-                  <label>Questions count:</label>
+                  <label>{t('create_page.generateForm.questionCount')}:</label>
                   <input
                     type="number"
                     name="questionsCount"
@@ -331,8 +339,12 @@ function TestCreation() {
                     onChange={(e) => setPrompt({ ...prompt, questionsCount: e.target.value })}
                   />
                 </div>
-                <button onClick={() => setPrompt(null)}>Cancel</button>
-                <button onClick={() => handleGenerateQuestions(prompt)}>Generate</button>
+                <button onClick={() => setPrompt(null)}>
+                  {t('create_page.questionForm.buttons.remove')}
+                </button>
+                <button onClick={() => handleGenerateQuestions(prompt)}>
+                  {t('create_page.generateForm.button')}
+                </button>
               </>
             )}
           </div>
@@ -344,7 +356,7 @@ function TestCreation() {
           <div className="collection" key={sIndex}>
             <div className="question-form">
               <div className="collection__controll">
-                <label>Collection Name:</label>
+                <label>{t('create_page.collectionForm.name')}:</label>
                 <select
                   name="collectionName"
                   value={sample.collectionName}
@@ -357,7 +369,7 @@ function TestCreation() {
                 </select>
               </div>
               <div className="collection__controll">
-                <label>Points:</label>
+                <label>{t('create_page.generateForm.points')}:</label>
                 <input
                   type="number"
                   name="points"
@@ -371,7 +383,7 @@ function TestCreation() {
                 )}
               </div>
               <div className="collection__controll">
-                <label>Questions count:</label>
+                <label>{t('create_page.generateForm.questionCount')}:</label>
                 <input
                   type="number"
                   name="questionsCount"
@@ -388,7 +400,8 @@ function TestCreation() {
               </div>
               <button className="questions-delete" onClick={() => handleDeleteCollection(sIndex)}>
                 <img src={Trash} alt="delete" />
-                Remove
+
+                {t('create_page.questionForm.buttons.remove')}
               </button>
             </div>
           </div>
@@ -396,16 +409,16 @@ function TestCreation() {
       </div>
       <div className="buttons-container">
         <button onClick={handleAddQuestion}>
-          <FaPlus /> Add Question
+          <FaPlus /> {t('create_page.form.buttons.addQuestion')}
         </button>
         <button onClick={handleAddQuestionPrompt}>
-          <FaRobot /> Generation with AI
+          <FaRobot /> {t('create_page.form.buttons.generateWithAI')}
         </button>
         <button onClick={handleAddCollection}>
-          <FaFolderPlus /> Add Collection
+          <FaFolderPlus /> {t('create_page.form.buttons.addCollection')}
         </button>
         <button onClick={handleSubmit}>
-          <FaCheck /> Create Test
+          <FaCheck /> {t('create_page.form.buttons.submit')}
         </button>
       </div>
       {errors.submit &&

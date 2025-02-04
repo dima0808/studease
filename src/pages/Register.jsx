@@ -8,6 +8,7 @@ import human from '../assets/icons/human.svg';
 import emailIcon from '../assets/icons/email.svg';
 import passwordIcon from '../assets/icons/password.svg';
 import { CLIENT_PATH } from '../utils/constraints';
+import { useTranslation } from 'react-i18next';
 
 function Register() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     const token = Cookies.get('token');
@@ -31,7 +33,7 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== passwordConfirmation) {
-      setErrorMessage('Passwords do not match');
+      setErrorMessage(t('register_page.errorMessage'));
       return;
     }
     register({
@@ -40,18 +42,18 @@ function Register() {
       lastName,
       password,
     })
-    .then((response) => {
-      Cookies.set('token', response.token);
-      setEmail('');
-      setFirstName('');
-      setLastName('');
-      setPassword('');
-      setPasswordConfirmation('');
-      navigate('/tests');
-    })
-    .catch((error) => {
-      setErrorMessage(error.message);
-    });
+      .then((response) => {
+        Cookies.set('token', response.token);
+        setEmail('');
+        setFirstName('');
+        setLastName('');
+        setPassword('');
+        setPasswordConfirmation('');
+        navigate('/tests');
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
 
   return (
@@ -72,7 +74,7 @@ function Register() {
                 setEmail(event.target.value);
               }}
               required
-              placeholder="Email"
+              placeholder={t('register_page.email')}
               className="login__input"
             />
           </div>
@@ -87,7 +89,7 @@ function Register() {
                 setFirstName(event.target.value);
               }}
               required
-              placeholder="First name"
+              placeholder={t('register_page.firstName')}
               className="login__input"
             />
           </div>
@@ -102,7 +104,7 @@ function Register() {
                 setLastName(event.target.value);
               }}
               required
-              placeholder="Last name"
+              placeholder={t('register_page.lastName')}
               className="login__input"
             />
           </div>
@@ -115,7 +117,7 @@ function Register() {
               type="password"
               onChange={(event) => setPassword(event.target.value)}
               required
-              placeholder="Password"
+              placeholder={t('register_page.password')}
               className="login__input"
             />
           </div>
@@ -128,16 +130,16 @@ function Register() {
               type="password"
               onChange={(event) => setPasswordConfirmation(event.target.value)}
               required
-              placeholder="Repeat password"
+              placeholder={t('register_page.passwordConfirmation')}
               className="login__input"
             />
           </div>
         </div>
         <button type="submit" className="login__button">
-          Register
+          {t('register_page.btnSubmit')}
         </button>
         <Link title="Login" to="/" className="login__link">
-          Do you already have an account?
+          {t('register_page.loginLink')}
         </Link>
         {errorMessage && <div className="login__error">{errorMessage}</div>}
       </div>

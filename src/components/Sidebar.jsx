@@ -6,11 +6,13 @@ import tests_light from '../assets/icons/tests-light.svg';
 import collections_light from '../assets/icons/collections-light.svg';
 import arrows from '../assets/icons/arrows.svg';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -43,7 +45,7 @@ const Sidebar = () => {
                 alt="foto"
                 className={`${location.pathname === '/tests' ? 'active-icon' : ''}`}
               />
-              <p>Tests</p>
+              <p>{t('sidebar.tests')}</p>
             </div>
           </div>
           <div
@@ -62,7 +64,7 @@ const Sidebar = () => {
                 alt="foto"
                 className={`${location.pathname === '/collections' ? 'active-icon' : ''}`}
               />
-              <p>Collections</p>
+              <p>{t('sidebar.collections')}</p>
             </div>
           </div>
           <div className="toggle-button" onClick={toggleSidebar}>
@@ -87,7 +89,7 @@ const Sidebar = () => {
                 className="logout__icon-path"
               />
             </svg>
-            <p>Log out</p>
+            <p>{t('sidebar.logout')}</p>
           </button>
         </div>
       </aside>
