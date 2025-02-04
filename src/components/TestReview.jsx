@@ -14,20 +14,22 @@ function TestReview({ testSession }) {
     <div className="container">
       {IsAnswer ? (
         <div className="mt-55 mb-55">
-          <h2 className="test-info__title">The answers you chose</h2>
+          <h2 className="test-info__title">{t('testReview_page.title')}</h2>
           <div className="test-info__details mt-55">
             <div className="test-info__item">
-              <span className="test-info__label">Student:</span> {testSession.studentGroup}{' '}
-              {testSession.studentName}
+              <span className="test-info__label">{t('testReview_page.student')}:</span>{' '}
+              {testSession.studentGroup} {testSession.studentName}
             </div>
             <div className="test-info__item">
-              <span className="test-info__label">Started:</span> {testSession.startedAt}
+              <span className="test-info__label">{t('testReview_page.started')}:</span>{' '}
+              {testSession.startedAt}
             </div>
             <div className="test-info__item">
-              <span className="test-info__label">Finished:</span> {testSession.finishedAt}
+              <span className="test-info__label">{t('testReview_page.finished')}:</span>{' '}
+              {testSession.finishedAt}
             </div>
             <div className="test-info__item">
-              <span className="test-info__label">Duration:</span>{' '}
+              <span className="test-info__label">{t('testReview_page.duration')}:</span>{' '}
               {calculateTimeDifference(testSession.startedAt, testSession.finishedAt)}
             </div>
           </div>
@@ -42,11 +44,11 @@ function TestReview({ testSession }) {
                 {(() => {
                   switch (response.question.type) {
                     case 'single_choice':
-                      return 'Choose your option';
+                      return t('question_page.chooseOption');
                     case 'multiple_choices':
-                      return 'Choose your options';
+                      return t('question_page.chooseOptions');
                     case 'matching':
-                      return 'Match the pairs';
+                      return t('question_page.matchPairs');
                     default:
                       return '';
                   }
@@ -78,19 +80,19 @@ function TestReview({ testSession }) {
           ))}
           <button onClick={() => window.print()} className="test-info__pdf-button">
             <img src={download} alt="download" />
-            Download my answers
+            {t('testReview_page.download')}
           </button>
         </div>
       ) : (
         <div className="finished">
-          <h1>Test have been completed!</h1>
+          <h1>{t('testReview_page.finished')}</h1>
           <div className="finished__answer">
             <button
               onClick={() => {
                 setIsAnswer(true);
               }}
               className="finished__check">
-              Check my answers
+              {t('testReview_page.checkAnswers')}
             </button>
           </div>
         </div>

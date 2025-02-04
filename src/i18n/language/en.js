@@ -100,7 +100,6 @@ export const en = {
       details: 'Details',
     },
   },
-
   testPreview_page: {
     duration: 'Duration',
     question: 'Questions',
@@ -115,6 +114,25 @@ export const en = {
       group: "Field 'Group' cannot be empty",
       name: "Field 'Full Name' cannot be empty",
     },
+  },
+  question_page: {
+    chooseOption: 'Choose an option',
+    chooseOptions: 'Choose options',
+    matchPairs: 'Match pairs',
+    buttons: {
+      next: 'Next',
+      finish: 'Finish',
+    },
+  },
+  testReview_page: {
+    title: 'Test review',
+    student: 'Student',
+    started: 'Started',
+    finished: 'Finished',
+    duration: 'Duration',
+    download: 'Download answers',
+    finished: 'Test has been completed',
+    checkAnswers: 'Check answers',
   },
   dropdownMenu: {
     title: 'Actions',

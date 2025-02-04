@@ -136,6 +136,16 @@ export const uk = {
       finish: 'Завершити',
     },
   },
+  testReview_page: {
+    title: 'Результати тестування',
+    student: 'Студент',
+    started: 'Початок',
+    finished: 'Завершення',
+    duration: 'Тривалість',
+    download: 'Завантажити відповіді',
+    finished: 'Тест завершено!',
+    checkAnswers: 'Переглянути результати',
+  },
   dropdownMenu: {
     title: 'Дії',
     info: 'Інформація',
