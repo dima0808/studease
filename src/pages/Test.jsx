@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getTestById } from '../utils/http';
 import { SERVER_IP, SERVER_PORT, WS_PROTOCOL } from '../utils/constraints';
@@ -7,6 +7,7 @@ import TestPreview from '../components/TestPreview';
 import Question from '../components/Question';
 import Cookies from 'js-cookie';
 import TestReview from '../components/TestReview';
+import { useTranslation } from 'react-i18next';
 
 function Test() {
   const { id } = useParams();
@@ -22,6 +23,7 @@ function Test() {
   const [message, setMessage] = useState(null);
   const [isAlive, setIsAlive] = useState(true);
   const isAliveRef = useRef(true);
+  const { t } = useTranslation();
 
   const onTestSessionMessageReceived = (message) => {
     const { type, content, question, testSession } = JSON.parse(message.body);
@@ -66,40 +68,40 @@ function Test() {
 
   useEffect(() => {
     getTestById(id)
-    .then((data) => {
-      setTest(data);
-      const client = new Client({
-        brokerURL: WS_PROTOCOL + SERVER_IP + SERVER_PORT + '/ws',
-        onConnect: () => {
-          console.log('WebSocket client connected');
-          setIsConnected(true);
-        },
-        onStompError: () => {
-          console.log('Failed to connect WebSocket client');
+      .then((data) => {
+        setTest(data);
+        const client = new Client({
+          brokerURL: WS_PROTOCOL + SERVER_IP + SERVER_PORT + '/ws',
+          onConnect: () => {
+            console.log('WebSocket client connected');
+            setIsConnected(true);
+          },
+          onStompError: () => {
+            console.log('Failed to connect WebSocket client');
+            setIsConnected(false);
+          },
+        });
+        client.activate();
+        setClient(client);
+        return () => {
+          client.deactivate().then(() => console.log('WebSocket client disconnected'));
+          setClient(null);
           setIsConnected(false);
-        },
-      });
-      client.activate();
-      setClient(client);
-      return () => {
-        client.deactivate().then(() => console.log('WebSocket client disconnected'));
-        setClient(null);
-        setIsConnected(false);
-      };
-    })
-    .catch((error) => setError({ message: error.message || 'An error occurred' }));
+        };
+      })
+      .catch((error) => setError({ message: error.message || 'An error occurred' }));
     setMessage(null);
   }, [id]);
 
   useEffect(() => {
     if (client && isConnected && credentials) {
       const errorSubscription = client.subscribe(
-          `/user/${credentials}/queue/errors`,
-          onErrorMessageReceived,
+        `/user/${credentials}/queue/errors`,
+        onErrorMessageReceived,
       );
       const testSessionSubscription = client.subscribe(
-          `/user/${credentials}/queue/testSession`,
-          onTestSessionMessageReceived,
+        `/user/${credentials}/queue/testSession`,
+        onTestSessionMessageReceived,
       );
       const studentGroup = credentials.split(':')[0];
       const studentName = credentials.split(':')[1];
@@ -203,7 +205,7 @@ function Test() {
     } catch (error) {
       console.log('Error health check (no connection)');
     }
-  }
+  };
 
   const handleNextQuestion = () => {
     if (!client || !isConnected) {
@@ -268,15 +270,15 @@ function Test() {
 
   if (isStarted && !isFinished) {
     return (
-        <Question
-            test={test}
-            handleSaveAnswer={handleSaveAnswer}
-            handleFinishTest={handleFinishTest}
-            testSession={testSession}
-            question={question}
-            error={message}
-            clearError={() => setMessage(null)}
-        />
+      <Question
+        test={test}
+        handleSaveAnswer={handleSaveAnswer}
+        handleFinishTest={handleFinishTest}
+        testSession={testSession}
+        question={question}
+        error={message}
+        clearError={() => setMessage(null)}
+      />
     );
   }
 

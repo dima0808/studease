@@ -8,6 +8,7 @@ import {
 } from '../utils/http';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 import { calculateTimeDifference } from '../utils/timeUtils';
 import { CLIENT_PATH } from '../utils/constraints';
 import Questions from '../components/info/Questions';
@@ -24,6 +25,7 @@ function TestInfo() {
   const [error, setError] = useState(null);
   const [isQuestionsVisible, setIsQuestionsVisible] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
   const testLink = `http://${CLIENT_PATH}/#/${id}`;
 
   useEffect(() => {
@@ -37,7 +39,7 @@ function TestInfo() {
     getFinishedSessionsByTestId(id, token)
       .then((data) => {
         setTestFinishedSessions(data.sessions);
-        setSortedSessions(data.sessions); // Ініціалізуємо відсортовані дані
+        setSortedSessions(data.sessions);
       })
       .catch((error) => setError({ message: error.message || 'An error occurred' }));
   }, [id]);
@@ -105,26 +107,42 @@ function TestInfo() {
           <input type="text" value={testLink} readOnly className="test-info__link-input" />
           <button onClick={handleCopyLink} className="test-info__copy-button">
             <FaCopy className="test-info__copy-icon" />
-            {copied ? 'Copied!' : 'Copy Link'}
+            {copied ? t('testInfo_page.buttons.copied') : t('testInfo_page.buttons.copyLink')}
           </button>
         </div>
       </div>
 
       <div className="test-info__details">
-        <p>Open Date: {testData.openDate}</p>
-        <p>Deadline: {testData.deadline}</p>
-        <p>Time Limit: {testData.minutesToComplete} minutes</p>
-        <p>Max Score: {testData.maxScore}</p>
-        <p>Questions: {testData.questionsCount}</p>
-        <p>Started Sessions: {testData.startedSessions}</p>
-        <p>Finished Sessions: {testData.finishedSessions}</p>
+        <p>
+          {t('testInfo_page.openDate')}: {testData.openDate}
+        </p>
+        <p>
+          {t('testInfo_page.deadline')}: {testData.deadline}
+        </p>
+        <p>
+          {t('testInfo_page.timeLimit')}: {testData.minutesToComplete}
+        </p>
+        <p>
+          {t('testInfo_page.maxScore')}: {testData.maxScore}
+        </p>
+        <p>
+          {t('testInfo_page.questionsCount')}:{testData.questionsCount}
+        </p>
+        <p>
+          {t('testInfo_page.startedSessions')}: {testData.startedSessions}
+        </p>
+        <p>
+          {t('testInfo_page.finishedSessions')}: {testData.finishedSessions}
+        </p>
       </div>
 
       <div className="test-info__show">
         <button
           className="test-info__import-button"
           onClick={() => setIsQuestionsVisible(!isQuestionsVisible)}>
-          {isQuestionsVisible ? 'Hide Questions' : 'Show Questions'}
+          {isQuestionsVisible
+            ? t('testInfo_page.buttons.hideQuestions')
+            : t('testInfo_page.buttons.showQuestions')}
         </button>
         {isQuestionsVisible && <Questions questions={questions} />}
       </div>
@@ -132,31 +150,31 @@ function TestInfo() {
       <button
         onClick={() => getFinishedSessionsByTestIdInCsv(testData.name, id, Cookies.get('token'))}
         className="test-info__import-button">
-        Export
+        {t('testInfo_page.export')}
       </button>
       <table className="test-info__table">
         <thead>
           <tr>
             <th>
-              Group
+              {t('testInfo_page.table.group')}
               <button className="sort-button" onClick={() => sortSessions('studentGroup')}>
                 {getSortIcon('studentGroup')}
               </button>
             </th>
             <th>
-              Full Name
+              {t('testInfo_page.table.fullName')}
               <button className="sort-button" onClick={() => sortSessions('studentName')}>
                 {getSortIcon('studentName')}
               </button>
             </th>
-            <th>Score</th>
+            <th>{t('testInfo_page.table.score')}</th>
             <th>
-              Completion Time
+              {t('testInfo_page.table.completionTime')}
               <button className="sort-button" onClick={() => sortSessions('completionTime')}>
                 {getSortIcon('completionTime')}
               </button>
             </th>
-            <th>Details</th>
+            <th>{t('testInfo_page.table.details')}</th>
           </tr>
         </thead>
         <tbody>
@@ -174,7 +192,7 @@ function TestInfo() {
                     )
                   }
                   className="test-info__details-button">
-                  Details
+                  {t('testInfo_page.table.details')}
                 </button>
               </td>
             </tr>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SingleChoice from '../components/SingleChoice';
 import MultipleChoices from './MultipleChoices';
 import MatchPairs from '../components/MatchPairs';
+import { useTranslation } from 'react-i18next';
 
 function Question({
   test,
@@ -15,6 +16,7 @@ function Question({
   const [selectedAnswers, setSelectedAnswers] = useState([]);
   const [timeLeft, setTimeLeft] = useState(0);
   const [endTime, setEndTime] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!endTime) {
@@ -82,11 +84,11 @@ function Question({
           {(() => {
             switch (question.type) {
               case 'single_choice':
-                return 'Choose your option';
+                return t('question_page.chooseOption');
               case 'multiple_choices':
-                return 'Choose your options';
+                return t('question_page.chooseOptions');
               case 'matching':
-                return 'Match the pairs';
+                return t('question_page.matchPairs');
               default:
                 return '';
             }
@@ -114,7 +116,9 @@ function Question({
 
         <div className="question__next">
           <button className="question__next-btn" onClick={handleNext}>
-            {testSession.currentQuestionIndex < test.questionsCount - 1 ? 'Next' : 'Finish'}
+            {testSession.currentQuestionIndex < test.questionsCount - 1
+              ? t('question_page.buttons.next')
+              : t('question_page.buttons.finish')}
           </button>
         </div>
       </div>

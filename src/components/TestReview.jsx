@@ -4,9 +4,11 @@ import MultipleChoicesReview from '../components/review/MultipleChoicesReview';
 import MatchPairsReview from '../components/review/MatchPairsReview';
 import { calculateTimeDifference } from '../utils/timeUtils';
 import download from '../assets/icons/download.svg';
+import { useTranslation } from 'react-i18next';
 
 function TestReview({ testSession }) {
   const [IsAnswer, setIsAnswer] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="container">
