@@ -60,7 +60,7 @@ function Register() {
     <form onSubmit={onSubmit} className="container__center">
       <div className="login">
         <div className="login__title">
-          <h1>KPI FICTING</h1>
+          <h1>StudEase</h1>
         </div>
         <div className="login__fields">
           <div className="login__field">

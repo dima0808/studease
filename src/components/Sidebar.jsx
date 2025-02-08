@@ -26,7 +26,7 @@ const Sidebar = () => {
     <>
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar__logo">
-          <h1 className="sidebar__title">KPI FICTING</h1>
+          <h1 className="sidebar__title">StudEase</h1>
         </div>
         <div className="sidebar__menu">
           <div

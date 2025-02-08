@@ -85,7 +85,7 @@ function TestReview({ testSession }) {
         </div>
       ) : (
         <div className="finished">
-          <h1>{t('testReview_page.finished')}</h1>
+          <h1>{t('testReview_page.finishedText')}</h1>
           <div className="finished__answer">
             <button
               onClick={() => {

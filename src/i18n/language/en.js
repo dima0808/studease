@@ -131,7 +131,7 @@ export const en = {
     finished: 'Finished',
     duration: 'Duration',
     download: 'Download answers',
-    finished: 'Test has been completed',
+    finishedText: 'Test has been completed',
     checkAnswers: 'Check answers',
   },
   dropdownMenu: {

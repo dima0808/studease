@@ -143,7 +143,7 @@ export const uk = {
     finished: 'Завершення',
     duration: 'Тривалість',
     download: 'Завантажити відповіді',
-    finished: 'Тест завершено!',
+    finishedText: 'Тест завершено!',
     checkAnswers: 'Переглянути результати',
   },
   dropdownMenu: {
