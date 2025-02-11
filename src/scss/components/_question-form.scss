@@ -85,6 +85,11 @@
   }
 }
 
+.answer__essay {
+  text-align: center;
+  padding-block: 50px;
+}
+
 .answer-add {
   margin-top: 10px;
   padding-block: 10px;
@@ -93,6 +98,7 @@
   background-color: transparent;
   color: $black;
   font-weight: 500;
+  font-family: sans-serif;
   font-size: 16px;
   border: 1px solid $gray-light;
   cursor: pointer;
@@ -194,7 +200,7 @@
   position: relative;
 }
 
-.questions-container .image-upload input[type="file"] {
+.questions-container .image-upload input[type='file'] {
   display: none;
 }
 
@@ -215,7 +221,6 @@
     opacity: 0.8;
   }
 }
-
 
 .questions-container .image-preview {
   position: relative;
