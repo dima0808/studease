@@ -99,8 +99,8 @@ function Question({
         </h1>
         <h1 className="question__name">{question.content}</h1>
 
-        {question.image && <img className="question__image" src={question.image} alt="question" />}
-        {/* <img className="question__image" src={foto} alt="question" /> */}
+        {/* {question.image && <img className="question__image" src={question.image} alt="question" />} */}
+        <img className="question__image" src={foto} alt="question" />
 
         {question.type === 'single_choice' && (
           <SingleChoice
@@ -117,12 +117,7 @@ function Question({
           />
         )}
         {question.type === 'matching' && (
-          <textarea
-            className="question__essay"
-            placeholder={t('question_page.essayPlaceholder')}
-            value={selectedAnswers[0] || ''}
-            onChange={(e) => setSelectedAnswers([e.target.value])}
-          />
+          <MatchPairs answers={question.answers} setSelectedAnswers={setSelectedAnswers} />
         )}
 
         {question.type === 'essay' && (
