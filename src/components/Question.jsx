@@ -3,6 +3,7 @@ import SingleChoice from '../components/SingleChoice';
 import MultipleChoices from './MultipleChoices';
 import MatchPairs from '../components/MatchPairs';
 import { useTranslation } from 'react-i18next';
+import foto from '../assets/image/BW.png';
 
 function Question({
   test,
@@ -89,12 +90,17 @@ function Question({
                 return t('question_page.chooseOptions');
               case 'matching':
                 return t('question_page.matchPairs');
+              case 'essay':
+                return t('question_page.essay');
               default:
                 return '';
             }
           })()}
         </h1>
         <h1 className="question__name">{question.content}</h1>
+
+        {question.image && <img className="question__image" src={question.image} alt="question" />}
+        {/* <img className="question__image" src={foto} alt="question" /> */}
 
         {question.type === 'single_choice' && (
           <SingleChoice
@@ -111,7 +117,21 @@ function Question({
           />
         )}
         {question.type === 'matching' && (
-          <MatchPairs answers={question.answers} setSelectedAnswers={setSelectedAnswers} />
+          <textarea
+            className="question__essay"
+            placeholder={t('question_page.essayPlaceholder')}
+            value={selectedAnswers[0] || ''}
+            onChange={(e) => setSelectedAnswers([e.target.value])}
+          />
+        )}
+
+        {question.type === 'essay' && (
+          <textarea
+            className="question__essay"
+            placeholder={t('question_page.essayPlaceholder')}
+            value={selectedAnswers[0] || ''}
+            onChange={(e) => setSelectedAnswers([e.target.value])}
+          />
         )}
 
         <div className="question__next">

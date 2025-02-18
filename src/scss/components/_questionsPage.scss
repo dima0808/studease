@@ -1,4 +1,28 @@
 .question {
+  &__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-block: 20px;
+  }
+
+  &__essay {
+    font-size: 20px;
+    font-weight: 500;
+    margin-block: 20px;
+    width: 100%;
+    height: 150px;
+    border: 2px solid $brd-clr;
+    padding: 10px;
+    border-radius: 10px;
+    resize: none;
+
+    &:focus {
+      border: 2px solid $blue-light;
+    }
+  }
+
   &__body {
     background-color: $white;
     padding: 69px 106px;

@@ -135,6 +135,8 @@ export const uk = {
     chooseOption: 'Оберіть варіант',
     chooseOptions: 'Оберіть варіанти',
     matchPairs: 'Відповідність',
+    essay: 'Розгорнута відповідь',
+    essayPlaceholder: 'Введіть вашу відповідь тут...',
     buttons: {
       next: 'Далі',
       finish: 'Завершити',

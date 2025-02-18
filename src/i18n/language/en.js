@@ -123,6 +123,8 @@ export const en = {
     chooseOption: 'Choose an option',
     chooseOptions: 'Choose options',
     matchPairs: 'Match pairs',
+    essay: 'Essay',
+    essayPlaceholder: 'Enter your answer here...',
     buttons: {
       next: 'Next',
       finish: 'Finish',
