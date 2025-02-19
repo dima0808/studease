@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SingleChoice from '../components/SingleChoice';
 import MultipleChoices from './MultipleChoices';
 import MatchPairs from '../components/MatchPairs';
 import { useTranslation } from 'react-i18next';
-import foto from '../assets/image/BW.png';
 
 function Question({
   test,
@@ -15,6 +14,7 @@ function Question({
   clearError,
 }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const answerContentRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [endTime, setEndTime] = useState(null);
   const { t } = useTranslation();
@@ -38,7 +38,9 @@ function Question({
       setTimeLeft(timeLeft);
       if (timeLeft <= 0) {
         clearInterval(timer);
-        handleSaveAnswer(selectedAnswers);
+        handleSaveAnswer(selectedAnswers, answerContentRef.current?.value);
+        setSelectedAnswers([]);
+        answerContentRef.current.value = '';
         handleFinishTest();
       }
     }, 1000);
@@ -46,7 +48,9 @@ function Question({
   }, [endTime, handleFinishTest, handleSaveAnswer, selectedAnswers, test]);
 
   const handleNext = () => {
-    handleSaveAnswer(selectedAnswers);
+    handleSaveAnswer(selectedAnswers, answerContentRef.current?.value);
+    setSelectedAnswers([]);
+    answerContentRef.current.value = '';
     clearError();
   };
 
@@ -100,7 +104,6 @@ function Question({
         <h1 className="question__name">{question.content}</h1>
 
         {/* {question.image && <img className="question__image" src={question.image} alt="question" />} */}
-        <img className="question__image" src={foto} alt="question" />
 
         {question.type === 'single_choice' && (
           <SingleChoice
@@ -122,10 +125,9 @@ function Question({
 
         {question.type === 'essay' && (
           <textarea
+            ref={answerContentRef}
             className="question__essay"
             placeholder={t('question_page.essayPlaceholder')}
-            value={selectedAnswers[0] || ''}
-            onChange={(e) => setSelectedAnswers([e.target.value])}
           />
         )}
 

@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { addQuestionToCollection } from '../../utils/http';
 import Trash from '../../assets/icons/trash.svg';
-import { FaTimes } from 'react-icons/fa';
 
 function Questions({ instance, collections, errors, setInstance, setErrors }) {
   const { t } = useTranslation();
-  const fileInputRefs = useRef([]);
+  // const fileInputRefs = useRef([]);
 
   const handleDeleteQuestion = (questionIndex) => {
     const questions = [...instance.questions];
@@ -95,23 +94,23 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
     setInstance({ ...instance, questions });
   };
 
-  const handleImageChange = (questionIndex, e) => {
-    const file = e.target.files[0];
-    const questions = [...instance.questions];
-    questions[questionIndex].image = URL.createObjectURL(file);
-    questions[questionIndex].collection = '';
-    questions[questionIndex].isSaved = false;
-    setInstance({ ...instance, questions });
-  };
-
-  const handleDeleteImage = (questionIndex) => {
-    const questions = [...instance.questions];
-    questions[questionIndex].image = null;
-    questions[questionIndex].collection = '';
-    questions[questionIndex].isSaved = false;
-    setInstance({ ...instance, questions });
-    fileInputRefs.current[questionIndex].value = '';
-  };
+  // const handleImageChange = (questionIndex, e) => {
+  //   const file = e.target.files[0];
+  //   const questions = [...instance.questions];
+  //   questions[questionIndex].image = URL.createObjectURL(file);
+  //   questions[questionIndex].collection = '';
+  //   questions[questionIndex].isSaved = false;
+  //   setInstance({ ...instance, questions });
+  // };
+  //
+  // const handleDeleteImage = (questionIndex) => {
+  //   const questions = [...instance.questions];
+  //   questions[questionIndex].image = null;
+  //   questions[questionIndex].collection = '';
+  //   questions[questionIndex].isSaved = false;
+  //   setInstance({ ...instance, questions });
+  //   fileInputRefs.current[questionIndex].value = '';
+  // };
 
   const validateField = (key, value, index1 = -1, index2 = 0) => {
     let error = '';
@@ -230,29 +229,29 @@ function Questions({ instance, collections, errors, setInstance, setErrors }) {
                 </select>
               </div>
             </div>
-            <div className="image-upload">
-              {!question.image && (
-                <label htmlFor={`file-input-${qIndex}`} className="answer-add">
-                  {t('create_page.questionForm.buttons.addImage')}
-                </label>
-              )}
-              <input
-                type="file"
-                accept="image/*"
-                id={`file-input-${qIndex}`}
-                ref={(el) => (fileInputRefs.current[qIndex] = el)}
-                onChange={(e) => handleImageChange(qIndex, e)}
-                style={{ display: 'none' }}
-              />
-              {question.image && (
-                <div className="image-preview">
-                  <img src={question.image} alt="Question" />
-                  <button type="button" onClick={() => handleDeleteImage(qIndex)}>
-                    <FaTimes />
-                  </button>
-                </div>
-              )}
-            </div>
+            {/*<div className="image-upload">*/}
+            {/*  {!question.image && (*/}
+            {/*    <label htmlFor={`file-input-${qIndex}`} className="answer-add">*/}
+            {/*      {t('create_page.questionForm.buttons.addImage')}*/}
+            {/*    </label>*/}
+            {/*  )}*/}
+            {/*  <input*/}
+            {/*    type="file"*/}
+            {/*    accept="image/*"*/}
+            {/*    id={`file-input-${qIndex}`}*/}
+            {/*    ref={(el) => (fileInputRefs.current[qIndex] = el)}*/}
+            {/*    onChange={(e) => handleImageChange(qIndex, e)}*/}
+            {/*    style={{ display: 'none' }}*/}
+            {/*  />*/}
+            {/*  {question.image && (*/}
+            {/*    <div className="image-preview">*/}
+            {/*      <img src={question.image} alt="Question" />*/}
+            {/*      <button type="button" onClick={() => handleDeleteImage(qIndex)}>*/}
+            {/*        <FaTimes />*/}
+            {/*      </button>*/}
+            {/*    </div>*/}
+            {/*  )}*/}
+            {/*</div>*/}
             {question.type !== 'essay' && (
               <button className="answer-add" onClick={() => handleAddAnswer(qIndex)}>
                 {t('create_page.questionForm.buttons.addAnswer')}

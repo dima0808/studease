@@ -6,7 +6,6 @@ import { calculateTimeDifference } from '../utils/timeUtils';
 import download from '../assets/icons/download.svg';
 import { useTranslation } from 'react-i18next';
 import EssayReview from './review/EssayReview';
-import foto from '../assets/image/BW.png';
 
 function TestReview({ testSession }) {
   const [IsAnswer, setIsAnswer] = useState(false);
@@ -36,7 +35,7 @@ function TestReview({ testSession }) {
             </div>
           </div>
           {testSession.responses.map((response, index) => (
-            <div key={response.id} className="question__body mt-55">
+            <div key={index} className="question__body mt-55">
               <div className="question__timer">
                 <div className="question__counter">
                   {index + 1}/{testSession.responses.length}
@@ -83,7 +82,7 @@ function TestReview({ testSession }) {
                   selectedAnswer={response.answerIds}
                 />
               )}
-              {response.question.type === 'essay' && <EssayReview answer={response.answerIds[0]} />}
+              {response.question.type === 'essay' && <EssayReview answer={response.answerContent} />}
             </div>
           ))}
           <button onClick={() => window.print()} className="test-info__pdf-button">
