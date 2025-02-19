@@ -41,15 +41,19 @@ export const en = {
         multipleChoices: 'Multiple choices',
         singleChoice: 'Single choice',
         matching: 'Matching',
+        essay: 'Essay',
       },
       buttons: {
         saveToCollection: 'Save to collection',
         addAnswer: 'Add answer',
         remove: 'Remove',
+        addImage: 'Add image',
       },
       textQuestion: 'Text question',
       textAnswer: 'Text answer',
       points: 'Points',
+      essayNotice:
+        'This question assumes an essay answer. The answer will be entered during the test. ✍🏻',
     },
     generateForm: {
       theme: 'Theme',
@@ -119,6 +123,8 @@ export const en = {
     chooseOption: 'Choose an option',
     chooseOptions: 'Choose options',
     matchPairs: 'Match pairs',
+    essay: 'Essay',
+    essayPlaceholder: 'Enter your answer here...',
     buttons: {
       next: 'Next',
       finish: 'Finish',

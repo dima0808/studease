@@ -28,6 +28,8 @@ function TestInfo() {
   const { t } = useTranslation();
   const testLink = `http://${CLIENT_PATH}/#/${id}`;
 
+  console.log(testFinishedSessions);
+
   useEffect(() => {
     const token = Cookies.get('token');
     getTestById(id, token)

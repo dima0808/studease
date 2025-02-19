@@ -328,6 +328,7 @@ function TestCreation() {
                     <option value="matching">
                       {t('create_page.questionForm.option.matching')}
                     </option>
+                    <option value="essay">{t('create_page.questionForm.option.essay')}</option>
                   </select>
                 </div>
                 <div className="collection__controll">

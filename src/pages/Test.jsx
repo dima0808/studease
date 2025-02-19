@@ -223,7 +223,7 @@ function Test() {
     }
   };
 
-  const handleSaveAnswer = (answers) => {
+  const handleSaveAnswer = (answers, answerContent) => {
     if (!client || !isConnected) {
       return; // handle error in a better way
     }
@@ -235,6 +235,7 @@ function Test() {
         },
         body: JSON.stringify({
           answerIds: answers,
+          answerContent: answerContent
         }),
       });
     } catch (error) {

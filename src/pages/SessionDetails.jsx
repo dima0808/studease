@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { useTranslation } from 'react-i18next';
 import { getFinishedSessionsByTestId } from '../utils/http';
 import BackButton from '../components/BackButton';
+import EssayReview from "../components/review/EssayReview";
 
 function SessionDetails() {
   const location = useLocation();
@@ -65,6 +66,8 @@ function SessionDetails() {
                     return 'Choose your options';
                   case 'matching':
                     return 'Match the pairs';
+                  case 'essay':
+                    return 'Essay';
                   default:
                     return '';
                 }
@@ -90,6 +93,11 @@ function SessionDetails() {
               <MatchPairsReview
                 answers={response.question.answers}
                 selectedAnswer={response.answerIds}
+              />
+            )}
+            {response.question.type === 'essay' && (
+              <EssayReview
+                answer={response.answerContent}
               />
             )}
           </div>

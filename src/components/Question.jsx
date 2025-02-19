@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SingleChoice from '../components/SingleChoice';
 import MultipleChoices from './MultipleChoices';
 import MatchPairs from '../components/MatchPairs';
@@ -14,6 +14,7 @@ function Question({
   clearError,
 }) {
   const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const answerContentRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [endTime, setEndTime] = useState(null);
   const { t } = useTranslation();
@@ -37,7 +38,9 @@ function Question({
       setTimeLeft(timeLeft);
       if (timeLeft <= 0) {
         clearInterval(timer);
-        handleSaveAnswer(selectedAnswers);
+        handleSaveAnswer(selectedAnswers, answerContentRef.current?.value);
+        setSelectedAnswers([]);
+        answerContentRef.current.value = '';
         handleFinishTest();
       }
     }, 1000);
@@ -45,7 +48,9 @@ function Question({
   }, [endTime, handleFinishTest, handleSaveAnswer, selectedAnswers, test]);
 
   const handleNext = () => {
-    handleSaveAnswer(selectedAnswers);
+    handleSaveAnswer(selectedAnswers, answerContentRef.current?.value);
+    setSelectedAnswers([]);
+    answerContentRef.current.value = '';
     clearError();
   };
 
@@ -89,12 +94,16 @@ function Question({
                 return t('question_page.chooseOptions');
               case 'matching':
                 return t('question_page.matchPairs');
+              case 'essay':
+                return t('question_page.essay');
               default:
                 return '';
             }
           })()}
         </h1>
         <h1 className="question__name">{question.content}</h1>
+
+        {/* {question.image && <img className="question__image" src={question.image} alt="question" />} */}
 
         {question.type === 'single_choice' && (
           <SingleChoice
@@ -112,6 +121,14 @@ function Question({
         )}
         {question.type === 'matching' && (
           <MatchPairs answers={question.answers} setSelectedAnswers={setSelectedAnswers} />
+        )}
+
+        {question.type === 'essay' && (
+          <textarea
+            ref={answerContentRef}
+            className="question__essay"
+            placeholder={t('question_page.essayPlaceholder')}
+          />
         )}
 
         <div className="question__next">
