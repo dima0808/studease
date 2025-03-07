@@ -66,6 +66,16 @@ export const en = {
       name: 'Collection name',
     },
   },
+  collection_creation_page: {
+    title: 'Create collection',
+    form: {
+      title: 'Name',
+      description: 'Description',
+      buttons: {
+        submit: 'Create',
+      },
+    },
+  },
   login_page: {
     email: 'Email',
     password: 'Password',
@@ -140,6 +150,12 @@ export const en = {
     finishedText: 'Test has been completed',
     checkAnswers: 'Check answers',
   },
+  notFound: {
+    test: 'Oh, no test?',
+    collection: 'Oh, no collection?',
+    createTest: 'Quickly create your own test',
+    createCollection: 'Quickly create your own collection',
+  },
   dropdownMenu: {
     title: 'Actions',
     info: 'Info',
@@ -149,6 +165,18 @@ export const en = {
     create: 'Create',
     import: 'Import',
     export: 'Export',
+    dataTitle: {
+      menu: 'Dropdown menu',
+      createTest: 'Create new test',
+      createCollection: 'Create new collection',
+      deleteAll: 'Remove selected items',
+      infoTest: 'Information about the test',
+      cloneTest: 'Clone the test',
+      removeTest: 'Delete the test',
+      infoCollection: 'Information about the collection',
+      cloneCollection: 'Clone the collection',
+      removeCollection: 'Delete the collection',
+    },
   },
   sidebar: {
     tests: 'Tests',

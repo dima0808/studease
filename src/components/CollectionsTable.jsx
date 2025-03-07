@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Header from './Header';
 import NotFoundTest from './NotFoundTest';
 import { deleteCollectionByName, getAllCollections } from '../utils/http';
@@ -20,9 +20,11 @@ const CollectionsTable = () => {
     setSearchValue(value);
   };
 
-  const filteredCollections = collections.filter((test) =>
-    test.name.toLowerCase().includes(searchValue.toLowerCase()),
-  );
+  const filteredCollections = useMemo(() => {
+    return collections.filter((test) =>
+      test.name.toLowerCase().includes(searchValue.toLowerCase().trim()),
+    );
+  }, [collections, searchValue]);
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -91,9 +93,7 @@ const CollectionsTable = () => {
         <div className="session-table__body">
           {isLoading ? (
             [...Array(5)].map((_, index) => <RowLoader key={index} />)
-          ) : filteredCollections.length === 0 ? (
-            <NotFoundTest isTest={false} />
-          ) : (
+          ) : filteredCollections.length > 0 ? (
             filteredCollections.map((collection) => (
               <CollectionRow
                 key={collection.id}
@@ -106,7 +106,9 @@ const CollectionsTable = () => {
                 isTest={false}
               />
             ))
-          )}
+          ) : !isLoading && collections.length === 0 ? (
+            <NotFoundTest isTest={false} />
+          ) : null}
         </div>
       </div>
     </div>

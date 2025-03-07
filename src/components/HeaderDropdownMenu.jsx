@@ -8,11 +8,13 @@ import remove from '../assets/icons/remove.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
+const HeaderDropdownMenu = ({ deleteSelectedTests, text }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const isTest = location.pathname === '/tests';
 
   const dropdownRef = useRef(null);
 
@@ -38,9 +40,9 @@ const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
     <div className="dropdown" ref={dropdownRef}>
       <button
         onClick={handleMenuToggle}
-        className={`dropdown-toggle header-toggle ${
-          isMenuOpen ? 'dropdown-toggle--inactive' : ''
-        }`}>
+        className={`dropdown-toggle header-toggle ${isMenuOpen ? 'dropdown-toggle--inactive' : ''}`}
+        title={t('dropdownMenu.dataTitle.menu')}
+        type="button">
         <span>{t('dropdownMenu.title')}</span>
         <svg
           width="22"
@@ -58,33 +60,41 @@ const HeaderDropdownMenu = ({ deleteSelectedTests }) => {
       </button>
       {isMenuOpen && (
         <div className="dropdown__menu header-menu">
-          <div
+          <button
             onClick={() => {
               location.pathname === '/tests'
                 ? navigate('/create-test')
                 : navigate('/create-collection');
             }}
+            data-title={
+              isTest
+                ? t('dropdownMenu.dataTitle.createTest')
+                : t('dropdownMenu.dataTitle.createCollection')
+            }
+            type="button"
             className="dropdown__item">
             <img src={create} alt="info" />
             {t('dropdownMenu.create')}
-          </div>
-          <div className="dropdown__item">
+          </button>
+          <button className="dropdown__item" type="button" disabled data-title="Coming soon">
             <img src={importImg} alt="clone" />
             {t('dropdownMenu.import')}
-          </div>
-          <div className="dropdown__item">
+          </button>
+          <button className="dropdown__item" type="button" disabled data-title="Coming soon">
             <img src={exportImg} alt="edit" />
             {t('dropdownMenu.export')}
-          </div>
-          <div
+          </button>
+          <button
             onClick={() => {
               deleteSelectedTests();
               setIsMenuOpen(false);
             }}
+            type="button"
+            data-title={t('dropdownMenu.dataTitle.deleteAll')}
             className="dropdown__item remove">
             <img src={remove} alt="remove" />
             {t('dropdownMenu.remove')}
-          </div>
+          </button>
         </div>
       )}
     </div>

@@ -1,19 +1,26 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 function NotFoundTest({ isTest = true }) {
+  const { t } = useTranslation();
+  const [quicklyTest, createTest, ...textTest] = t('notFound.createTest').split(' ');
+  const [quicklyCollection, createCollections, ...textCollection] = t(
+    'notFound.createCollection',
+  ).split(' ');
+
   return isTest ? (
     <div className="no-tests">
-      Ой, немає теста?
+      {t('notFound.test')}
       <span role="img" aria-label="sad">
         😢
       </span>
       <div className="create-test">
-        Скоріш{' '}
+        {quicklyTest}{' '}
         <Link className="link-to-create" to={`/create-test`}>
-          створи{' '}
+          {createTest}{' '}
         </Link>
-        свій тест
+        {textTest.join(' ')}
         <span role="img" aria-label="happy">
           😊
         </span>
@@ -21,16 +28,16 @@ function NotFoundTest({ isTest = true }) {
     </div>
   ) : (
     <div className="no-tests">
-      Ой, немає колекції?
+      {t('notFound.collection')}
       <span role="img" aria-label="sad">
         😢
       </span>
       <div className="create-test">
-        Скоріш{' '}
+        {quicklyCollection}{' '}
         <Link className="link-to-create" to={`/create-collection`}>
-          створи{' '}
+          {createCollections}{' '}
         </Link>
-        свою колекцію
+        {textCollection.join(' ')}
         <span role="img" aria-label="happy">
           😊
         </span>

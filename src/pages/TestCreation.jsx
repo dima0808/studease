@@ -295,7 +295,7 @@ function TestCreation() {
               <>
                 <div className="collection__controll">
                   <label>{t('create_page.generateForm.theme')}:</label>
-                  <input
+                  <textarea
                     type="text"
                     name="theme"
                     placeholder="Theme"

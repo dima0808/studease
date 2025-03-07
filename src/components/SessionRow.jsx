@@ -103,7 +103,7 @@ const SessionRow = ({
         <span>{startedSessions}</span>
       </div>
       <div className="session-row__actions">
-        <DropdownMenu id={id} onDelete={onDelete} />
+        <DropdownMenu id={id} onDelete={onDelete} text="test" />
       </div>
     </div>
   );

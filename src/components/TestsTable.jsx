@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import Header from './Header';
 import SessionRow from './SessionRow';
@@ -21,9 +21,11 @@ const TestsTable = () => {
     setSearchValue(value);
   };
 
-  const filteredTests = tests.filter((test) =>
-    test.name.toLowerCase().includes(searchValue.toLowerCase()),
-  );
+  const filteredTests = useMemo(() => {
+    return tests.filter((test) =>
+      test.name.toLowerCase().includes(searchValue.toLowerCase().trim()),
+    );
+  }, [tests, searchValue]);
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
@@ -62,6 +64,11 @@ const TestsTable = () => {
       .catch((error) => console.error(error));
   }, []);
 
+  const styleText =
+    i18next.language === 'uk'
+      ? { transform: 'translate(-50%, -50%)' }
+      : { transform: 'translate(-50%, -75%)' };
+
   return (
     <div className="tests-table">
       <Header
@@ -80,23 +87,14 @@ const TestsTable = () => {
           <div className="session-table__header-end-date">{t('test_page.session.endDate')}</div>
           <div className="session-table__header-status">{t('test_page.session.status')}</div>
           <div className="session-table__header-sessions">
-            <span
-              style={
-                i18next.language === 'uk'
-                  ? { transform: 'translate(-50%, -50%)' }
-                  : { transform: 'translate(-50%, -75%)' }
-              }>
-              {t('test_page.session.activeSession')}
-            </span>
+            <span style={styleText}>{t('test_page.session.activeSession')}</span>
           </div>
           <div className="session-table__header-actions">{t('test_page.session.actions')}</div>
         </div>
         <div className="session-table__body">
           {isLoading ? (
             [...Array(5)].map((_, index) => <RowLoader key={index} />)
-          ) : filteredTests.length === 0 ? (
-            <NotFoundTest isTest={true} />
-          ) : (
+          ) : filteredTests.length > 0 ? (
             filteredTests.map((test) => (
               <SessionRow
                 key={test.id}
@@ -110,7 +108,9 @@ const TestsTable = () => {
                 setSelectedTests={setSelectedTests}
               />
             ))
-          )}
+          ) : !isLoading && tests.length === 0 ? (
+            <NotFoundTest isTest={true} />
+          ) : null}
         </div>
       </div>
     </div>

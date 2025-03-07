@@ -80,6 +80,32 @@ h5 {
   color: $black;
 }
 
+a,
+button {
+  &::after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 100%;
+    left: 100%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
 h1 {
   font-size: 48px;
 }

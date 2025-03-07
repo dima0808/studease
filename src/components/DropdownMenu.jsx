@@ -7,7 +7,7 @@ import remove from '../assets/icons/remove.svg';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const DropdownMenu = ({ id, onDelete, isTest = true }) => {
+const DropdownMenu = ({ id, onDelete, isTest = true, text }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -52,7 +52,9 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
     <div className="dropdown" ref={dropdownRef}>
       <button
         onClick={handleMenuToggle}
-        className={`dropdown-toggle ${isMenuOpen ? 'dropdown-toggle--inactive' : ''}`}>
+        className={`dropdown-toggle ${isMenuOpen ? 'dropdown-toggle--inactive' : ''}`}
+        title={t('dropdownMenu.dataTitle.menu')}
+        type="button">
         <span>{t('dropdownMenu.title')}</span>
         <svg
           width="22"
@@ -70,18 +72,42 @@ const DropdownMenu = ({ id, onDelete, isTest = true }) => {
       </button>
       {isMenuOpen && (
         <div className="dropdown__menu">
-          <div onClick={handleInfo} className="dropdown__item">
+          <button
+            type="button"
+            onClick={handleInfo}
+            className="dropdown__item"
+            data-title={
+              isTest
+                ? t('dropdownMenu.dataTitle.infoTest')
+                : t('dropdownMenu.dataTitle.infoCollection')
+            }>
             <img src={info} alt="info" />
             {t('dropdownMenu.info')}
-          </div>
-          <div onClick={handleClone} className="dropdown__item">
+          </button>
+          <button
+            type="button"
+            onClick={handleClone}
+            className="dropdown__item"
+            data-title={
+              isTest
+                ? t('dropdownMenu.dataTitle.cloneTest')
+                : t('dropdownMenu.dataTitle.cloneCollection')
+            }>
             <img src={clone} alt="clone" />
             {t('dropdownMenu.clone')}
-          </div>
-          <div onClick={handleDelete} className="dropdown__item remove">
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="dropdown__item remove"
+            data-title={
+              isTest
+                ? t('dropdownMenu.dataTitle.removeTest')
+                : t('dropdownMenu.dataTitle.removeCollection')
+            }>
             <img src={remove} alt="remove" />
             {t('dropdownMenu.remove')}
-          </div>
+          </button>
         </div>
       )}
     </div>

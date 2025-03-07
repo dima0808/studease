@@ -152,6 +152,12 @@ export const uk = {
     finishedText: 'Тест завершено!',
     checkAnswers: 'Переглянути результати',
   },
+  notFound: {
+    test: 'Ой, немає теста?',
+    collection: 'Ой, немає колекції?',
+    createTest: 'Швидко створіть свій тест',
+    createCollection: 'Швидко створіть свою колекцію',
+  },
   dropdownMenu: {
     title: 'Дії',
     info: 'Інформація',
@@ -161,6 +167,18 @@ export const uk = {
     create: 'Створити',
     import: 'Імпортувати',
     export: 'Експортувати',
+    dataTitle: {
+      menu: 'Меню',
+      createTest: 'Створити тест',
+      createCollection: 'Створити колекцію',
+      deleteAll: 'Видалити вибрані елементи',
+      infoTest: 'Інформація про тест',
+      cloneTest: 'Клонувати тест',
+      removeTest: 'Видалити тест',
+      infoCollection: 'Інформація про колекцію',
+      cloneCollection: 'Клонувати колекцію',
+      removeCollection: 'Видалити колекцію',
+    },
   },
   sidebar: {
     tests: 'Тести',
