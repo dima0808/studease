@@ -40,7 +40,9 @@ function Question({
         clearInterval(timer);
         handleSaveAnswer(selectedAnswers, answerContentRef.current?.value);
         setSelectedAnswers([]);
-        answerContentRef.current.value = '';
+        if (answerContentRef.current) {
+          answerContentRef.current.value = '';
+        }
         handleFinishTest();
       }
     }, 1000);
@@ -50,7 +52,9 @@ function Question({
   const handleNext = () => {
     handleSaveAnswer(selectedAnswers, answerContentRef.current?.value);
     setSelectedAnswers([]);
-    answerContentRef.current.value = '';
+    if (answerContentRef.current) {
+      answerContentRef.current.value = '';
+    }
     clearError();
   };
 
