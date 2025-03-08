@@ -22,7 +22,10 @@ function Header({ title, deleteSelectedTests, onSearch, isTest }) {
         </h1>
       </div>
       <div className="tests__tools">
-        <HeaderDropdownMenu deleteSelectedTests={deleteSelectedTests} />
+        <HeaderDropdownMenu
+          deleteSelectedTests={deleteSelectedTests}
+          text={location.pathname === '/tests' ? 'test' : 'collection'}
+        />
         <Search onSearch={onSearch} isTest={isTest} />
       </div>
     </div>

@@ -30,8 +30,16 @@
 }
 
 .search__delete {
+  background-color: transparent;
+  border: none;
   position: absolute;
   right: 10px;
-  margin-right: 10px;
+  top: 55%;
+  transform: translateY(-50%);
   cursor: pointer;
+  transition: opacity 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
 }

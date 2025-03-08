@@ -30,7 +30,9 @@ function Search({ onSearch, isTest = true }) {
         className="search__input"
       />
       {searchValue && (
-        <img onClick={handleDelete} className="search__delete" src={deleteImg} alt="delete" />
+        <button type="button" className="search__delete" onClick={handleDelete}>
+          <img src={deleteImg} alt="delete" />
+        </button>
       )}
     </div>
   );

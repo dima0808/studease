@@ -74,7 +74,7 @@ function Register() {
                 setEmail(event.target.value);
               }}
               required
-              placeholder={t('register_page.email')}
+              placeholder={t('login_page.email')}
               className="login__input"
             />
           </div>

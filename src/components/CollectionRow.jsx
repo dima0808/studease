@@ -58,7 +58,7 @@ const CollectionRow = ({
         <span>{questionsCount}</span>
       </div>
       <div className="session-row__actions">
-        <DropdownMenu id={name} onDelete={onDelete} isTest={isTest} />
+        <DropdownMenu id={name} onDelete={onDelete} isTest={isTest} text="collection" />
       </div>
     </div>
   );
