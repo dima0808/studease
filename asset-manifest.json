@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/studease/static/css/main.b8acb212.css",
-    "main.js": "/studease/static/js/main.47c2f62c.js",
+    "main.js": "/studease/static/js/main.52ade48d.js",
     "static/media/sticker.webp": "/studease/static/media/sticker.c146740dd752f177c80a.webp",
     "static/media/big-tests.svg": "/studease/static/media/big-tests.9e729c5be1ba24b725eff07db130a757.svg",
     "static/media/tests-black.svg": "/studease/static/media/tests-black.bcbee50babd756dc09c4f3e6db7154f1.svg",
@@ -33,10 +33,10 @@
     "static/media/create-tests.svg": "/studease/static/media/create-tests.4a8b6a338ac3e4ea13ba1b761897cbff.svg",
     "static/media/delete.svg": "/studease/static/media/delete.5742de76f16c3c685c3a257260b27e42.svg",
     "main.b8acb212.css.map": "/studease/static/css/main.b8acb212.css.map",
-    "main.47c2f62c.js.map": "/studease/static/js/main.47c2f62c.js.map"
+    "main.52ade48d.js.map": "/studease/static/js/main.52ade48d.js.map"
   },
   "entrypoints": [
     "static/css/main.b8acb212.css",
-    "static/js/main.47c2f62c.js"
+    "static/js/main.52ade48d.js"
   ]
 }
